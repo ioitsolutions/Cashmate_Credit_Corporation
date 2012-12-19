@@ -1,0 +1,33 @@
+th{
+	color:#ffffff;
+	text-align:center;
+	background-color: #339900;
+	font-family: "Arial", Tahoma, Sans Serif;
+	font-size:10pt;
+	vertical-align:middle;
+}
+td{
+	text-align:left;
+	font-family: "Arial", Tahoma, Sans Serif;
+	font-size:10pt;
+	vertical-align:middle;
+}
+#divscroll{
+	width:1000px;
+	overflow:scroll;
+}
+legend{
+	color:#339900;
+	font-family:"Arial",Tahoma, Sans Serif;
+}
+fieldset{
+	font-family: "Arial", Tahoma, Sans Serif;
+	font-size:10pt;
+}
+div.btn_right{
+	float:right;
+}
+
+ul#nav li a#loan{
+    background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
+}

@@ -1,0 +1,38 @@
+#bodyContent{
+	width:1000px;
+	height:100%;
+	padding:0px;
+	background-color:#ccffcc;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+}
+#left_content{
+	float:left;
+	width:690px;
+}
+#right_content {
+	width:280px;	
+	float:right;
+	margin-right:0px;
+}
+p{
+	font-family:"Arial",Tahoma,Sans Serif;
+	font-style:justify;
+}
+th{
+	color:#ffffff;
+	text-align:center;
+	background-color: #339900;
+	font-family: "Arial", Tahoma, Sans Serif;
+	font-size:10pt;
+}
+td{
+	text-align:left;
+	font-family: "Arial", Tahoma, Sans Serif;
+	font-size:10pt;
+}
+
+ul#nav li a#home{
+    background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
+}

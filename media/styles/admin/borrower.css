@@ -1,0 +1,46 @@
+#list_display{
+	width:1000px;
+	height:380px;
+	overflow-y:scroll;
+	}
+#branch_table_display{
+	width:950px;
+	text-align:center;
+	cellspacing:0;
+	}
+.table_content{
+	text-align:center;
+	}
+.edit_content_table{
+	 cellspacing:2;
+	 cellpadding:3;
+	 text-align:left;
+	 width:307;
+	}
+.textarea_edit{
+	width:155px;
+	}
+.selectbox_edit{
+	width:154px;
+	}
+.edit_align{
+	text-align:right;
+	width:200px;
+	}
+div#edit_header{
+	background-color:#339900;
+	height:20px;
+	width:307px;
+	font-weight:bold
+	}
+div#edit_body{
+	height:auto;
+	width:307px;
+	border:solid 1px;
+	border-color:#339900;
+	margin:auto;
+	}
+        
+ul#nav li a#borrowers{
+        background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
+        }
