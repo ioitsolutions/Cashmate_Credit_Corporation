@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">db_cashmate_v3</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="employees" view="colnames">
+<left>808</left>
+<top>76</top>
+<width>138</width>
+<height>306</height>
+<sql_create_table>CREATE TABLE `employees` (
+  `employee_id` int(11) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) NOT NULL,
+  `middle_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `contact_number` varchar(45) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `password` varchar(1000) NOT NULL,
+  `gender` varchar(45) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `area_id` int(11) NOT NULL,
+  `visible` tinyint(4) DEFAULT NULL,
+  `update_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`employee_id`),
+  UNIQUE KEY `UK_NAME` (`first_name`,`last_name`,`middle_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='list of all cashmate employees'</sql_create_table>
+</table>
+<table name="roles" view="colnames">
+<left>448</left>
+<top>48</top>
+<width>117</width>
+<height>145</height>
+<sql_create_table>CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `visible` tinyint(4) DEFAULT NULL,
+  `update_ts` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ROLE_NAME` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='list of different roles available for an employee'</sql_create_table>
+</table>
+<table name="role_menu_privileges" view="colnames">
+<left>241</left>
+<top>166</top>
+<width>149</width>
+<height>158</height>
+<sql_create_table>CREATE TABLE `role_menu_privileges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `menu_id` int(11) DEFAULT NULL,
+  `privilege_id` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT 'Active or Inactive',
+  `date_modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `menu_id` (`menu_id`),
+  KEY `role_menu_privileges_ibfk_1` (`role_id`),
+  KEY `privilege_id` (`privilege_id`),
+  CONSTRAINT `role_menu_privileges_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_menu_privileges_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_menu_privileges_ibfk_3` FOREIGN KEY (`privilege_id`) REFERENCES `privileges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="menus" view="colnames">
+<left>447</left>
+<top>198</top>
+<width>121</width>
+<height>128</height>
+<sql_create_table>CREATE TABLE `menus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `date_modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="privileges" view="colnames">
+<left>445</left>
+<top>334</top>
+<width>121</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `privileges` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="employee_roles" view="colnames">
+<left>615</left>
+<top>70</top>
+<width>165</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `employee_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `date_modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="employee_menu_privileges" view="colnames">
+<left>615</left>
+<top>213</top>
+<width>177</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `employee_menu_privileges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) DEFAULT NULL,
+  `menu_id` int(11) DEFAULT NULL,
+  `privilege_id` int(11) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT 'Active or Inactive',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
