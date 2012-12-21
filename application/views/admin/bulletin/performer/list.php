@@ -3,7 +3,7 @@
     <div id="list_display">			
         <fieldset id="borrower">
             <legend>List of Top Performers</legend>                 
-                <a href="create">Add Top Performer</a>                   
+                <?php echo HTML::anchor("/bulletin_performer/create", "Add Top Performer"); ?>                
                 <table id="branch_table_display" cellspacing="0">
                         <tr>
                                 <th>Employee</th>
@@ -14,18 +14,21 @@
                                 <th>Creator</th>
                                 <th></th>
                                 <th></th>
-                        </tr>                      
+                        </tr>
+                        <?php foreach ($performers as $performer) : ?>
                         <tr>
-                                <td class="table_content"></td>
-                                <td class="table_content"></td>
-                                <td class="table_content"></td>
-                                <td class="table_content"></td>
-                                <td class="table_content"></td>
-                                <td class="table_content"></td>
-                                <td class="table_content"><a href="update">Edit</a></td>
-                                <td class="table_content"><a href="delete">Delete</a></td>
-                        </tr>                      
+                                <td class="table_content"><?php echo $performer->employee->last_name .', '.$performer->employee->first_name .' '. $performer->employee->middle_name; ?></td>
+                                <td class="table_content"><?php echo $performer->month; ?></td>
+                                <td class="table_content"><?php echo $performer->year; ?></td>
+                                <td class="table_content"><?php echo $performer->content; ?></td>
+                                <td class="table_content"><?php echo date("M d, Y",strtotime($performer->date_created)); ?></td>
+                                <td class="table_content"><?php echo $performer->user_created ?></td>
+                                <td class="table_content"><?php echo HTML::anchor("bulletin_performer/update/".$performer->id, "Edit"); ?></td>
+                                <td class="table_content"><?php echo HTML::anchor("bulletin_performer/delete/".$performer->id, "Delete"); ?></td>
+                        </tr> 
+                        <?php endforeach; ?>
                 </table>
+                <?php echo $pagination; ?>
         </fieldset>
     </div>
 </div>
