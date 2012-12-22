@@ -31,7 +31,8 @@ class Controller_Bulletin_Performer extends Controller_Template_Admin{
     public function action_create(){
         
         $this->performer = ORM::factory('performer');
-        $employees = ORM::factory('employee')->order_by('first_name')->find_all()->as_array('id', 'first_name');
+        $employees = ORM::factory('employee')->select(array(Db::expr('CONCAT(first_name," ",middle_name," ",last_name)'),'fullname'))
+                ->order_by('first_name')->find_all()->as_array('id','fullname');
         
         $view = View::factory('admin/bulletin/performer/edit');
         $view->set('performer',$this->performer);
@@ -39,26 +40,79 @@ class Controller_Bulletin_Performer extends Controller_Template_Admin{
         
         $this->template->title_content = "Cashmate Bulletin: Add Top Performer";
         $view->set('title_form','Add Top Performer');
+        $view->set('btn_title','Add');
+        $view->set('task','Add');
         
         $this->template->content = $view;
     }
     
     public function action_update(){
+        
+        $performer_id = $this->request->param('id');
+        $performer = ORM::factory('performer', $performer_id);
+        $employees = ORM::factory('employee')->select(array(Db::expr('CONCAT(first_name," ",middle_name," ",last_name)'),'fullname'))
+                ->order_by('first_name')->find_all()->as_array('id','fullname');
+        
         $view = View::factory('admin/bulletin/performer/edit');
+        $view->set('performer',$performer);
+        $view->bind('employees', $employees);
         
         $this->template->title_content = "Cashmate Bulletin: Edit Top Performer";
         $view->set('title_form','Edit Top Performer');
+        $view->set('btn_title','Save');
+        $view->set('task','Save');
         
         $this->template->content = $view;
     }
     
     
     public function action_delete(){
+        $performer_id = $this->request->param('id');
+        $performer = ORM::factory('performer',$performer_id);
         
+        if($performer->loaded()) {
+            $performer->delete();
+            $this->redirect('bulletin_performer/list/?page=1');
+        }
     }
     
     public function action_save(){
         
+        $performer_id = $this->request->param('id');
+        $performer = ORM::factory('performer', $performer_id);
+        $performer->values($_POST);
+        
+        $errors = array();
+        
+        try{
+            $performer->save();
+            $this->redirect('bulletin_performer/list/?page=1');
+        }catch(ORM_Validation_Exception $ex){
+            $errors = $ex->errors('validation');
+        }
+        
+        $employees = ORM::factory('employee')->select(array(Db::expr('CONCAT(first_name," ",middle_name," ",last_name)'),'fullname'))
+                ->order_by('first_name')->find_all()->as_array('id','fullname');
+        
+        $view = View::factory('admin/bulletin/performer/edit');
+        $view->set("performer", $performer);
+        $view->bind('employees', $employees);
+        $view->set('errors', $errors);
+        
+        if($_POST['task'] == 'Add')
+        {
+            $this->template->title_content = "Cashmate Bulletin: Add Top Performer";
+            $view->set('title_form','Add Top Performer');
+            $view->set('btn_title','Add');
+            $view->set('task','Add');
+        }else{
+            $this->template->title_content = "Cashmate Bulletin: Edit Top Performer";
+            $view->set('title_form','Edit Top Performer');
+            $view->set('btn_title','Save');
+            $view->set('task','Save');
+        }
+        
+        $this->template->content = $view;
     }
 }
 ?>

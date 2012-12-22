@@ -18,7 +18,7 @@
                         <?php foreach ($performers as $performer) : ?>
                         <tr>
                                 <td class="table_content"><?php echo $performer->employee->last_name .', '.$performer->employee->first_name .' '. $performer->employee->middle_name; ?></td>
-                                <td class="table_content"><?php echo $performer->month; ?></td>
+                                <td class="table_content"><?php echo date("F", mktime(0, 0, 0, $performer->month, 10)); ?></td>
                                 <td class="table_content"><?php echo $performer->year; ?></td>
                                 <td class="table_content"><?php echo $performer->content; ?></td>
                                 <td class="table_content"><?php echo date("M d, Y",strtotime($performer->date_created)); ?></td>
