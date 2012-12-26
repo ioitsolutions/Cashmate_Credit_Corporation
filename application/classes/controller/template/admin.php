@@ -38,7 +38,7 @@ class Controller_Template_Admin extends Controller_Template{
         $links = array(
             'Home' => '',
             'Bulletin Contents' => 'bulletin_announcement',
-            'Authentication' => 'authentication_employee',
+            'Authentication' => 'authentication_role',
             'Branch' => 'branch_branches',
             'Borrowers' => 'borrower_borrower',
             'Loan' => 'loan_type',

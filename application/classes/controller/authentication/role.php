@@ -30,7 +30,7 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
     }
     
     public function action_update(){
-        $view = View::factory('admin/authentication/employee/edit');
+        $view = View::factory('admin/authentication/role/edit');
         
         $this->template->title_content = "Role - Administration Edit Role";
         $view->set('title_form','Edit Role Record');
@@ -43,8 +43,30 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         
     }
     
+    public function action_viewemployee(){
+        $view = View::factory('admin/authentication/role/default_role_employee');
+        $this->template->title_content = "Role - Administration View Role Employee";
+        $this->template->content = $view;
+    }
+    
+    public function action_addemployee(){
+        $view = View::factory('admin/authentication/role/added_role_employee');
+        $this->template->title_content = "Role - Administration Add Role Employee";
+        $this->template->content = $view;
+    }
+    
     public function action_save(){
         
+    }
+    
+    public function action_menu()
+    {
+        $this->menus=ORM::factory('menu');
+        $employees = ORM::factory('employee')->order_by('name')->find_all()->as_array('id','name');
+        $view->set('menus',$this->menus);
+        $view->bind('employees', $employees);
+        //$view = View::factory('admin/authentication/role/edit');
+        $this->template->content = $view;
     }
 }
 ?>

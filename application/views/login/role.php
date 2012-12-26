@@ -1,9 +1,10 @@
 <?php defined('SYSPATH') or die('No direct access allowed.'); ?>
-<form action="../home">
+<form id="form" method="post">
+    <?php echo Form::open('login/role/'); ?>
     <table align="center">
         <tr>
             <td>Role Password: </td> 
-            <td><input type="text"></td>
+            <td><input type="password" name="role_password"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Log In"/></td>

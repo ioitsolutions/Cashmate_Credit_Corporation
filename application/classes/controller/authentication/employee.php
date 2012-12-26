@@ -21,12 +21,32 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
     }
     
     public function action_create(){
-        $view = View::factory('admin/authentication/employee/add');
-        
+        $view = View::factory('admin/authentication/employee/add');        
         $this->template->title_content = "Employee - Administration Add Employee";
         $view->set('title_form','Add Employee Record');
         $view->set('btn_title','Add');
         $this->template->content = $view;
+        if($_POST)
+        {
+            if($_POST['password']==$_POST['val_password'])
+            {
+                $emp_info=ORM::factory('addemp');
+                $emp_info->employee_id=$_POST['emp_id'];
+                $emp_info->first_name=$_POST['first_name'];
+                $emp_info->middle_name=$_POST['mid_name'];
+                $emp_info->last_name=$_POST['last_name'];
+                $emp_info->contact_number=$_POST['cont_num'];
+                $emp_info->address=$_POST['add'];
+                $emp_info->employee_password=$_POST['password'];
+                $emp_info->branch_id=$_POST['branch'];
+                $emp_info->area_id=$_POST['area'];
+                $emp_info->update_ts=$_POST['date'];
+                $emp_info->visible=$_POST['status'];
+                $emp_info->save();
+            }
+            else{}
+            
+        }  
     }
     
     public function action_update(){

@@ -5,6 +5,7 @@
         <title><?php echo $title; ?></title>
         <?php echo $styles; ?>
         <?php echo $scripts; ?>
+        <script type="text/javascript" src="/Cashmate_credit_corporation/media/scripts/dynamic_page.js"></script>
     </head>
     <body>
         <div id="banner">
@@ -15,7 +16,7 @@
                 <p id="title" class="banner_name">Cashmate</p>
                 <p id="sub_title" class="banner_name">Credit Corporation</p>
                 <div id="branch_container">
-                    <p id="branch" class="banner_name">Angeles</p>
+                    <p id="branch" class="banner_name"><?php echo Cookie::get('branch_name');?></p>
 		</div>
                 <p id="position" class="banner_info first_row first_column">Position:</p>
                 <p id="emp_name" class="banner_info first_row second_column">Employee Name:</p>
@@ -25,10 +26,10 @@
                 <p id="lrq" class="banner_info third_row second_column">LRQ:</p>
                 <p id="lap" class="banner_info third_row third_column">LAP:</p>
                 <p id="lrl" class="banner_info third_row fourth_column">LRL:</p>
-                <p id="" class="banner_info_record second_row first_column">Administrator</p>
-                <p id="" class="banner_info_record second_row second_column">ARNOLD JR. AYAOAN</p>
-                <p id="" class="banner_info_record second_row third_column">December 12th, 2012</p>
-                <p id="" class="banner_info_record second_row fourth_column">12:51:46 PM</p>
+                <p id="" class="banner_info_record second_row first_column"><?php echo Session::instance()->get('role_info')?></p>
+                <p id="" class="banner_info_record second_row second_column"><?php echo Cookie::get('first_name');echo" ";echo Cookie::get('middle_name');echo" ";echo Cookie::get('last_name');?></p>
+                <p id="" class="banner_info_record second_row third_column"><?php echo date("F jS, Y");?></p>
+                <p id="Time" onload="Timer()" class="banner_info_record second_row fourth_column"></p>
                 <a href="" id="change_password" class="banner_link banner_info">Change Password</a>
                 <a href="" id="log_out" class="banner_link banner_info">Log Out</a>
             </div>
