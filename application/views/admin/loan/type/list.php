@@ -11,14 +11,17 @@
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
+                                <?php foreach($rates as $rate) :?>
 				<tr>
-					<td class="table_content">30</td>
-					<td class="table_content">Interest Earned</td>
-					<td class="table_content">Value</td>
-					<td class="table_content"><a href="update">Edit</a></td>
-					<td class="table_content"><a href="delete">Delete</a></td>
+					<td class="table_content"><?php echo $rate->class;?></td>
+					<td class="table_content"><?php echo $rate->description;?></td>
+					<td class="table_content"><?php echo $rate->value;?></td>
+					<td class="table_content"><?php echo HTML::anchor("/loan_type/update/".$rate->id, "Edit"); ?></td>
+					<td class="table_content"><?php echo HTML::anchor("/loan_type/delete/".$rate->id, "Delete"); ?></td>
 				</tr>
+                                <?php endforeach; ?>
 			</table>
+                        <?php echo $pagination; ?>
 		</fieldset>
 	</div>
 </div>		
