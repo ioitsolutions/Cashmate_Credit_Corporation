@@ -9,7 +9,7 @@
 		</div>
 		<fieldset id="borrower">
 			<legend>List of Employee Memos</legend>
-			<a href="create">Add Memo</a>                   
+			<?php echo HTML::anchor("/bulletin_memo_employee/create", "Add Employee Memo"); ?>                 
 			<table id="branch_table_display" cellspacing="0">
 				<tr>
 					<th>Employee</th>
@@ -22,18 +22,21 @@
 					<th></th>
 					<th></th>
 				</tr>
+                                <?php foreach ($memos as $memo) : ?>
 				<tr>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"></td>
-					<td class="table_content"><a href="update">Edit</a></td>
-					<td class="table_content"><a href="delete">Delete</a></td>
+					<td class="table_content"><?php echo $memo->employee->first_name .' '.$memo->employee->middle_name .' '.$memo->employee->last_name  ;?></td>
+					<td class="table_content"><?php echo $memo->title ;?></td>
+					<td class="table_content"><?php echo $memo->description ;?></td>
+					<td class="table_content"><?php if($memo->type == 1) echo 'Specific'; else echo 'Global';?></td>
+					<td class="table_content"><?php echo date('M d, Y',strtotime($memo->expiration_date)) ;?></td>
+					<td class="table_content"><?php echo date('M d, Y',strtotime($memo->date_created)) ;?></td>
+					<td class="table_content"><?php echo $memo->user_created ;?></td>
+					<td class="table_content"><?php echo HTML::anchor("bulletin_memo_employee/update/".$memo->id, "Edit"); ?></td>
+					<td class="table_content"><?php echo HTML::anchor("bulletin_memo_employee/delete/".$memo->id, "Delete"); ?></td>
 				</tr>
+                                <?php endforeach; ?>
 			</table>
+                        <?php echo $pagination; ?>
 		</fieldset>
 	</div>
 </div>
