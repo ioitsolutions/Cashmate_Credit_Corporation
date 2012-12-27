@@ -22,7 +22,7 @@ else
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/timezones
  */
-date_default_timezone_set('America/Chicago');
+date_default_timezone_set('Asia/Manila');
 
 /**
  * Set the default locale.
@@ -72,6 +72,8 @@ I18n::lang('en-us');
 if (isset($_SERVER['KOHANA_ENV']))
 {
 	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
+}else{
+        Kohana::$environment = ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' ? Kohana::DEVELOPMENT : Kohana::PRODUCTION);
 }
 
 /**
@@ -91,6 +93,10 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/Cashmate_Credit_Corporation/',
+        'index_file' => FALSE,
+        'profile' => (Kohana::$environment !== Kohana::PRODUCTION),
+        'caching' => (Kohana::$environment === Kohana::PRODUCTION),
+        'errors' => TRUE,
 ));
 
 /**
