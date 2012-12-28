@@ -2,6 +2,9 @@
 
 class Model_Quote extends ORM{
     
+    protected $_belongs_to = array(
+        'creator'  => array ('model' => 'employee', 'foreign_key' => 'user_created' ),
+    );
     
     public function rules(){
         

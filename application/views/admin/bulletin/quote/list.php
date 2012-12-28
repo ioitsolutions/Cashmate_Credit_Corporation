@@ -20,7 +20,7 @@
                     <td class="table_content"><?php echo $quote->explanation;?></td>
                     <td class="table_content"><?php echo date('M d, Y',strtotime($quote->expiration_date));?></td>
                     <td class="table_content"><?php echo date('M d, Y',strtotime($quote->date_created));?></td>
-                    <td class="table_content"><?php echo $quote->user_created;?></td>
+                    <td class="table_content"><?php echo $quote->creator->last_name .', '.$quote->creator->first_name .' '. $quote->creator->middle_name; ?></td>
                     <td class="table_content"><?php echo HTML::anchor("bulletin_quote/update/".$quote->id, "Edit"); ?></td>
                     <td class="table_content"><?php echo HTML::anchor("bulletin_quote/delete/".$quote->id, "Delete"); ?></td>
                 </tr>

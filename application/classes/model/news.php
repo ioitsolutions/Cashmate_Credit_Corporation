@@ -2,7 +2,10 @@
 
 class Model_News extends ORM{
     
-    protected $_belongs_to = array('branch' => array ());
+    protected $_belongs_to = array(
+        'branch'  => array ('model' => 'branch', 'foreign_key' => 'branch_id' ),
+        'creator'  => array ('model' => 'employee', 'foreign_key' => 'user_created' ),
+    );
     
     public function rules(){
         

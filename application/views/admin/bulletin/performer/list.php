@@ -22,7 +22,7 @@
                                 <td class="table_content"><?php echo $performer->year; ?></td>
                                 <td class="table_content"><?php echo $performer->content; ?></td>
                                 <td class="table_content"><?php echo date("M d, Y",strtotime($performer->date_created)); ?></td>
-                                <td class="table_content"><?php echo $performer->user_created ?></td>
+                                <td class="table_content"><?php echo $performer->creator->last_name .', '.$performer->creator->first_name .' '. $performer->creator->middle_name; ?></td>
                                 <td class="table_content"><?php echo HTML::anchor("bulletin_performer/update/".$performer->id, "Edit"); ?></td>
                                 <td class="table_content"><?php echo HTML::anchor("bulletin_performer/delete/".$performer->id, "Delete"); ?></td>
                         </tr> 

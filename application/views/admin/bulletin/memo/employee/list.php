@@ -30,7 +30,7 @@
 					<td class="table_content"><?php if($memo->type == 1) echo 'Specific'; else echo 'Global';?></td>
 					<td class="table_content"><?php echo date('M d, Y',strtotime($memo->expiration_date)) ;?></td>
 					<td class="table_content"><?php echo date('M d, Y',strtotime($memo->date_created)) ;?></td>
-					<td class="table_content"><?php echo $memo->user_created ;?></td>
+					<td class="table_content"><?php echo $memo->creator->last_name .', '.$memo->creator->first_name .' '. $memo->creator->middle_name; ?></td>
 					<td class="table_content"><?php echo HTML::anchor("bulletin_memo_employee/update/".$memo->id, "Edit"); ?></td>
 					<td class="table_content"><?php echo HTML::anchor("bulletin_memo_employee/delete/".$memo->id, "Delete"); ?></td>
 				</tr>

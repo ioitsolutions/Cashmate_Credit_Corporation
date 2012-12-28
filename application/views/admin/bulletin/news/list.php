@@ -22,7 +22,7 @@
                     <td class="table_content"><?php echo $data->description ;?></td>
                     <td class="table_content"><?php if ($data->type == 1) echo 'Specific'; else echo 'Global'; ?></td>
                     <td class="table_content"><?php echo date('M d, Y',strtotime($data->date_created)) ;?></td>
-                    <td class="table_content"><?php echo $data->user_created ;?></td>
+                    <td class="table_content"><?php echo $data->creator->last_name .', '.$data->creator->first_name .' '. $data->creator->middle_name; ?></td>
                     <td class="table_content"><?php echo HTML::anchor("bulletin_news/update/".$data->id, "Edit"); ?></td>
                     <td class="table_content"><?php echo HTML::anchor("bulletin_news/delete/".$data->id, "Delete"); ?></td>
                 </tr>
