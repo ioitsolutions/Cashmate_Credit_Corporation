@@ -12,13 +12,13 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->content = View::factory('login/branch');
         if($_POST)
         {
-            $branches = ORM::factory('branch')->where('branch_password','=',$_POST['branch_password'])->find('branch_id','branch_name','branch_code');
-            if($branches->branch_code ==$_POST['branch_code'])
+            $branches = ORM::factory('branch')->where('password','=',$_POST['branch_password'])->find('id','name','code');
+            if($branches->code ==$_POST['branch_code'])
             {
-                $branch_info[]=array('branch_id'=>$branches->branch_id,'branch_code'=>$_POST['branch_code']);
+                $branch_info[]=array('branch_id'=>$branches->id,'branch_code'=>$_POST['branch_code']);
                 $branch = Session::instance()->set('branch_info',$branch_info);
-                Cookie::set('area_id',$branches->branch_id);
-                Cookie::set('branch_name',$branches->branch_name);
+                Cookie::set('area_id',$branches->id);
+                Cookie::set('branch_name',$branches->name);
                 $this->redirect('login/employee');
             }
             else
@@ -35,12 +35,12 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->content = View::factory('login/employee');
         if($_POST)
         {
-            $employees = ORM::factory('employee')->where('employee_password','=',$_POST['employee_password'])->find('employee_id','first_name','middle_name','last_name','area_id');
-            if($employees->area_id == Cookie::get('area_id') && $employees->employee_id==$_POST['employee_id'])
+            $employees = ORM::factory('employee')->where('employee_password','=',$_POST['employee_password'])->find('id','first_name','middle_name','last_name','area_id');
+            if($employees->area_id == Cookie::get('area_id') && $employees->id==$_POST['employee_id'])
             {
-                $employee_info[]=array('employee_id'=>$employees->employee_id,'area_id'=>$employees->area_id);
+                $employee_info[]=array('employee_id'=>$employees->id,'area_id'=>$employees->area_id);
                 $employee = Session::instance()->set('employee_info',$employee_info);
-                Cookie::set('employee_id',$employees->employee_id);
+                Cookie::set('employee_id',$employees->id);
                 Cookie::set('first_name',$employees->first_name);
                 Cookie::set('middle_name',$employees->middle_name);
                 Cookie::set('last_name',$employees->last_name);
