@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Login extends Controller_Template_Public{
-   
+class Controller_Login extends Controller_Template_Login{
     public function action_index(){
         $this->redirect('login/branch');        
     }
@@ -37,8 +36,7 @@ class Controller_Login extends Controller_Template_Public{
         if($_POST)
         {
             $employees = ORM::factory('employee')->where('employee_password','=',$_POST['employee_password'])->find('employee_id','first_name','middle_name','last_name','area_id');
-            $area_id=Cookie::get('area_id');
-            if($employees->area_id == $area_id && $employees->employee_id==$_POST['employee_id'])
+            if($employees->area_id == Cookie::get('area_id') && $employees->employee_id==$_POST['employee_id'])
             {
                 $employee_info[]=array('employee_id'=>$employees->employee_id,'area_id'=>$employees->area_id);
                 $employee = Session::instance()->set('employee_info',$employee_info);
@@ -61,25 +59,38 @@ class Controller_Login extends Controller_Template_Public{
         $this->template->title_content = "Role: Log In";
         $this->template->sublinks = array();
         $this->template->content = View::factory('login/role'); 
+        $pass_value[]=array();
         if($_POST)
         {
-            $roles = ORM::factory('role')->where('role_password','=',$_POST['role_password'])->find('name','id','user_credential');
-            $emp_role=ORM::factory('emprole')->where('employee_id','=',Cookie::get('employee_id'))->find('role_id');
-            if($roles->id==$emp_role->role_id and $emp_role->employee_id==Cookie::get('employee_id'))
+            $roles=ORM::factory('role')->where('role_password','=',$_POST['role_password'])->find('name','id');
+            $emprole=ORM::factory('emprole')->where('employee_id','=',Cookie::get('employee_id'))->find('role_id');
+            Session::instance()->set('role_info',$roles->name);
+            
+            if($emprole->role_id == $roles->id)
             {
-                $role = Session::instance()->set('role_info',$roles->name);
-                if($roles->user_credential==2)
+                $menu_privileges=ORM::factory('menuprivilege')->select('menu_id','privilege_id')->where('employee_id', '=', Cookie::get('employee_id'))->group_by('menu_id')->find_all();
+                foreach($menu_privileges as $menu_privilege)
                 {
-                    $this->redirect('adminhome'); 
+                    $menu_list=ORM::factory('menu')->select('menu_name','menu_id')->where('menu_id','=',$menu_privilege->menu_id)->group_by('menu_name')->find_all();
+                    foreach($menu_list as $menus =>$menu)
+                    {
+                        echo $menu->menu_name;
+                        $menu_pass_value[]=$menu->menu_name;
+                        $submenus_list=ORM::factory('submenu')->select('submenu_name','submenu_id','menu_id')->where('menu_id','=',$menu->menu_id)->group_by('submenu_name')->find_all();
+                        foreach($submenus_list as $submenus =>$submenu)
+                        {
+                            echo $submenu->submenu_name;
+                            $submenu_pass_value[]=$submenu->submenu_name;
+                        }
+                    } 
                 }
-                else
-                {
-                    $this->redirect('userhome'); 
-                }
+                Session::instance()->set('emp_menu',$menu_pass_value);
+                Session::instance()->set('emp_submenu',$submenu_pass_value);
+                $this->redirect('home'); 
             }
             else
             {
-                echo"<script type = 'text/javascript'>alert('Wrong username/password');</script>";
+                echo"<script type='text/javascript'>alert('Invalid role password');</script>";
             }
         }      
     }

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Bulletin_Announcement extends Controller_Template_Admin{
+class Controller_Bulletin_Announcement extends Controller_Template_User{
     
     public function before(){
         parent::before();

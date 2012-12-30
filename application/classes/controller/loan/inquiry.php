@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Loan_Inquiry extends Controller_Template_Employee{
+class Controller_Loan_Inquiry extends Controller_Template_User{
     
     public function before(){
         parent::before();

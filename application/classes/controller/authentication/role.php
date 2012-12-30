@@ -1,12 +1,26 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
-
-class Controller_Authentication_Role extends Controller_Template_Admin{
-    
+class Controller_Authentication_Role extends Controller_Template_User{
+    public $template='admin/authentication/role/edit';
     public function before(){
+        
         parent::before();
         $this->template->title = "Cashmate Credit Corporation: Authentication";
         $this->template->styles .= HTML::style('media/styles/admin/authentication.css');
         $this->template->sublinks = $this->get_authentication_links();
+        $this->template->roles=$this->get_role();
+        $this->template->menus=$this->get_menu();
+    }
+    
+    public function get_role()
+    {
+        $roles=ORM::factory('role')->find_all()->as_array('id','name');
+        return $roles;      
+    }
+    
+    public function get_menu()
+    {
+        $menus=ORM::factory('menu')->find_all()->as_array('menu_id','menu_name');
+        return $menus; 
     }
    
     public function action_index(){
@@ -27,6 +41,22 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         $view->set('title_form','Add Role Record');
         $view->set('btn_title','Add');
         $this->template->content = $view;
+        if($_POST)
+        {
+            $branches = ORM::factory('role/save_role')->where('branch_password','=',$_POST['branch_password'])->find('branch_id','branch_name','branch_code');
+            if($branches->branch_code ==$_POST['branch_code'])
+            {
+                $branch_info[]=array('branch_id'=>$branches->branch_id,'branch_code'=>$_POST['branch_code']);
+                $branch = Session::instance()->set('branch_info',$branch_info);
+                Cookie::set('area_id',$branches->branch_id);
+                Cookie::set('branch_name',$branches->branch_name);
+                $this->redirect('login/employee');
+            }
+            else
+            {
+                echo"<script type = 'text/javascript'>alert('Wrong username/password');</script>";
+            }
+        }
     }
     
     public function action_update(){

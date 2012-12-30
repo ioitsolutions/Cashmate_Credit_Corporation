@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Incentives_Custodian extends Controller_Template_Employee{
+class Controller_Incentives_Custodian extends Controller_Template_User{
     
     public function before(){
         parent::before();

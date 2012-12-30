@@ -135,3 +135,5 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'action'     => 'index',
 	));
 Cookie::$salt = 'foobar';
+
+Kohana::$config->attach(new Kohana_Config_File('global'));
