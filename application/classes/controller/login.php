@@ -68,7 +68,7 @@ class Controller_Login extends Controller_Template_Login{
             
             if($emprole->role_id == $roles->id)
             {
-                $menu_privileges=ORM::factory('menuprivilege')->select('menu_id','privilege_id')->where('employee_id', '=', Cookie::get('employee_id'))->group_by('menu_id')->find_all();
+                $menu_privileges=ORM::factory('menuprivilege')->select('menu_id','privilege_id')->where('role_id', '=', $roles->id)->group_by('menu_id')->find_all();
                 foreach($menu_privileges as $menu_privilege)
                 {
                     $menu_list=ORM::factory('menu')->select('menu_name','menu_id')->where('menu_id','=',$menu_privilege->menu_id)->group_by('menu_name')->find_all();
