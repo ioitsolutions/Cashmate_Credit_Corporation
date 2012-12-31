@@ -887,11 +887,11 @@
                                 <td ><span ></span>%</td>
                             </tr>
                             <tr>
-								<td >Total</td>
+				<td >Total</td>
                                 <td >100%</td>
                                 <td ><span ><input type="number" value="0.00"/></span></td>
                                 <td ><span ></span>%</td>
-								<td ><span ><input type="number" value="0.00"/></span></td>
+				<td ><span ><input type="number" value="0.00"/></span></td>
                                 <td ><span ></span>%</td>
                                 <td ><span ><input type="number" value="0.00"/></span></td>
 								<td ><span ></span>%</td>
