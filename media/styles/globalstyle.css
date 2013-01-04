@@ -22,14 +22,7 @@ position:relative;
 	font-weight:bold;
 	top:-20px;
 }
-a#change_password{
-	font-size:10pt;
-	left:1050px;
-}
-a#log_out{
-	font-size:10pt;
-	left:1180px;
-}
+
 div#logo_container{	
 	height:100px;
 	width:275px;
@@ -47,6 +40,7 @@ div#branch_container{
 }
 .banner_link{
 	top:10px;
+        font-size: 11pt;
 }
 .banner_info{	
 	position:absolute;	
@@ -214,6 +208,37 @@ table#branch_table_display td.table_content{
     border-bottom: 2px #fff solid;
     font-weight: bold;
 
+}
+.error{
+    color:red;
+}
+
+#banner_link_container
+{
+    position:absolute;
+    top:-5px;
+    width:1055px;
+}
+
+#branch_change_password{
+	left:390px;
+        font-size:10pt;
+}
+#branch_log_out{
+	left:800px;
+        font-size:10pt;
+}
+#employee_change_password{
+	left:590px;
+        font-size:10pt;
+}
+#employee_log_out{
+	left:945px;
+        font-size:10pt;
+}
+#error_container{
+    text-align:center;
+    color:red;
 }
 
 /*end pagination*/

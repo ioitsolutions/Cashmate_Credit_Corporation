@@ -24,12 +24,16 @@
                 <p id="lrq" class="banner_info third_row second_column">LRQ:</p>
                 <p id="lap" class="banner_info third_row third_column">LAP:</p>
                 <p id="lrl" class="banner_info third_row fourth_column">LRL:</p>
-                <p id="" class="banner_info_record second_row first_column"><?php echo Session::instance()->get('role_info')?></p>
+                <p id="" class="banner_info_record second_row first_column"><?php echo Cookie::get('role_info')?></p>
                 <p id="" class="banner_info_record second_row second_column"><?php echo Cookie::get('first_name');echo" ";echo Cookie::get('middle_name');echo" ";echo Cookie::get('last_name');?></p>
                 <p id="" class="banner_info_record second_row third_column"><?php echo date("F jS, Y");?></p>
                 <p id="Time" onload="Timer()" class="banner_info_record second_row fourth_column"></p>
-                <a href="" id="change_password" class="banner_link banner_info">Change Password</a>
-                <a href="" id="log_out" class="banner_link banner_info">Log Out</a>
+                <div id="banner_link_container">
+                    <a href="" id="branch_change_password" class="banner_link banner_info">Branch Change Password</a>
+                    <a href="" id="employee_change_password" class="banner_link banner_info">Employee Change Password</a>
+                    <a href="<?php echo url::site().'logout/branch' ?>" id="branch_log_out" class="banner_link banner_info">Branch Log Out</a>
+                    <a href="<?php echo url::site().'logout/employee' ?>" id="employee_log_out" class="banner_link banner_info">Employee Log Out</a>
+                </div> 
             </div>
         </div>
         

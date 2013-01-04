@@ -1,14 +1,18 @@
 <?php defined('SYSPATH') or die('No direct access allowed.'); ?>
 <form id="form" method="post">
     <?php echo Form::open('login/employee/'); ?>
+    <div id="error_container"><?php echo Cookie::get('emp_error');?></div>
     <table align="center">
+        
         <tr>
-            <td>Employee Id: </td> 
-            <td><input type="text" name="employee_id"></td>
+            <td><label for="employee_id">Employee Id:</label></td> 
+            <td><input type="text" name="employee_id"value="<?= Arr::get($values, 'id'); ?>"/></td>
+            <td><label for="employee_id" class="error"/><?php echo Arr::get($errors, 'id'); ?></td>
         </tr>
         <tr>
-            <td>Password: </td> 
-            <td><input type="password" name="employee_password"></td>
+            <td><label for="employee_password">Password:</label></td> 
+            <td><input type="password" name="employee_password"value="<?= Arr::get($values, 'employee_password'); ?>"/></td>
+            <td><label for="employee_password" class="error"/><?php echo Arr::get($errors, 'employee_password'); ?></td>
         </tr>
         <tr>
             <td><input type="submit" value="Log In"/></td>

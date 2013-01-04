@@ -38,7 +38,7 @@ class Controller_Template_User extends Controller_Template{
         $links = array(
             'Home' => 'home',
             'Bulletin Contents' => 'bulletin_announcement',
-            'Authentication' => 'authentication_role',
+            'Authentication' => 'authentication_employee',
             'Branch' => 'branch_branches',
             'Borrowers' => 'borrower_borrower',
             'Loan Types' => 'loan_type',

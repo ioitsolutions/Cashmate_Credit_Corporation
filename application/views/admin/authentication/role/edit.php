@@ -13,9 +13,6 @@
 					<td class="edit_align" id="roles">
                                             <select>
                                                
-                                                <?php foreach($roles as $role) :?>
-                                                <option><?php echo $role ?></option>
-                                                <?php endforeach; ?>
                                             </select>
                                         </td>
 				</tr>
@@ -24,9 +21,7 @@
 					<td class="edit_align" id="menus">
                                             <select>
                                                 
-                                                <?php foreach($menus as $menu) :?>
-                                                <option><?php echo $menu ?></option>
-                                                <?php endforeach; ?>
+                                                
                                             </select>
                                         </td>
 				</tr>

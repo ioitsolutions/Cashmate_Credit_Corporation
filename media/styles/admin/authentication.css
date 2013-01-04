@@ -40,6 +40,11 @@ div#edit_body{
 	border-color:#339900;
 	margin:auto;
 	}
+        
+ul#nav li a#authentication{
+        background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
+        }        
+        
 table#authentication_display{
     text-align: left;
     /*font-family: Verdana, Geneva, Arial, Helvetica, sans-serif ;*/
