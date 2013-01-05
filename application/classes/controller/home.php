@@ -2,37 +2,61 @@
 
 class Controller_Home extends Controller_Template_Admin{
     
+    private $view;
+    
     public function before(){
         parent::before();
-        $this->announcement_list();
-        $view = View::factory('home');
-        $view->set('announcement_content',View::factory('admin/bulletin/announcement/list'));
-        $view->set('memos_content', View::factory('admin/bulletin/memo/employee/list'));
-        $view->set('top_performers_content', View::factory('admin/bulletin/performer/list'));
-        
-        
+        $this->view = View::factory('home');        
         $this->template->title = "Cashmate Credit Corporation: Home";
         $this->template->title_content = "Home: Bulletin Contents";
         $this->template->styles .= HTML::style('media/styles/home.css');
         $this->template->sublinks = array();
-        $this->template->content = $view;
-        
     }
     
     public function action_index(){
+        $this->announcements_list();
+        $this->memos_list();
+        $this->branch_production_list();
+        $this->top_performers_list();
+        $this->branch_top_grossers_list();
+        $this->news_list();
+        $this->quotes_list();
+        
+        $this->template->content = $this->view;
+    }
+    
+    public function announcements_list(){
+        $announcements = ORM::factory('announcement')->limit(5)->find_all()->as_array();
+        $this->view->announcements = $announcements;
+    }
+    
+    public function memos_list(){
+        $memos = ORM::factory('memo')->where('branch_id', 'IS NOT', NULL)->limit(5)->find_all()->as_array();
+        $this->view->memos = $memos;
+    }
+    
+    public function branch_production_list(){
+        $branches = ORM::factory('branch')->limit(8)->find_all()->as_array();
+        $this->view->branches = $branches;
+    }
+    
+    public function top_performers_list(){
+        $performers = ORM::factory('performer')->limit(3)->find_all()->as_array();
+        $this->view->performers = $performers;
+    }
+    
+    public function branch_top_grossers_list(){
         
     }
     
-    public function announcement_list(){
-        $announcements = ORM::factory('announcement');
-        
-        $view = View::factory('admin/bulletin/announcement/list');
-        
-        $paginator = new Pagination(array('total_items'=>$announcements->count_all()));
-        $paginator->route_params(array('controller' => $this->request->controller(), 'action' => $this->request->action())); 
-        $view->announcements = $announcements->offset($paginator->offset)->limit($paginator->items_per_page)->find_all()->as_array();
-        $view->pagination = $paginator->render();
-        
+    public function news_list(){
+        $news = ORM::factory('news')->limit(5)->find_all()->as_array();
+        $this->view->news = $news;
+    }
+    
+    public function quotes_list(){
+        $quotes = ORM::factory('quote')->limit(5)->find_all()->as_array();
+        $this->view->quotes = $quotes;
     }
 }
 ?>
