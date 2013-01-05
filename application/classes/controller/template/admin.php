@@ -1,16 +1,15 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Template_User extends Controller_Template{
+class Controller_Template_Admin extends Controller_Template{
     
-    public $template = 'template/user';
+    public $template = 'template/admin';
     
     public function before(){
         parent::before();
         $this->template->meta = $this->get_meta();
         $this->template->styles = $this->get_styles();
         $this->template->scripts = $this->get_scripts();
-        $this->template->links1 = $this->get_links1();
-        $this->template->links2= $this->get_links2();
+        $this->template->links = $this->get_links();
     }
     
     protected function get_meta(){
@@ -35,52 +34,24 @@ class Controller_Template_User extends Controller_Template{
         return $data;
     }
     
-    protected function get_links1(){
+    protected function get_links(){
         $links = array(
-            'Home' => '',
+            'Home' => 'home',
             'Bulletin Contents' => 'bulletin_announcement',
             'Authentication' => 'authentication_role',
             'Branch' => 'branch_branches',
             'Borrowers' => 'borrower_borrower',
             'Loan' => 'loan_type',
-            'Application' => 'loan_application',
-        );
-        
-        return $links;
-    }
-    
-    protected function get_links2(){
-        $links = array(
-            'Loan Request' => 'loan_create',
+            
+            /* Employee */
+            /*'Application' => 'loan_application',*/
+            'Loan' => 'loan_application',
             'Performance And Incentives' => 'incentives_custodian',
             'Inquiry' => 'loan_inquiry',
-            'Reports' => '',
-            'Admin' => '',
+            'Reports' => ''
         );
         
         return $links;
-    }
-    
-    protected function get_loan_links(){
-        $sublinks = array(
-            'Create Request' => 'loan_create',
-            'Send Request'  => 'loan_send',
-            'Loan Approval' => 'loan_approval',
-            'Release Check' => 'loan_check',
-            'Release Voucher' => 'loan_voucher',
-            'Collection'    => 'loan_collection'
-        );
-        
-        return $sublinks;
-    }
-    
-    protected function get_incentives_links(){
-        $sublinks = array(
-            'Daily Cash Custodian' => 'incentives_custodian',
-            'Performance Per Cut Off'  => 'incentives_cutoff',
-        );
-        
-        return $sublinks;
     }
     
     protected function get_bulletin_links(){
@@ -106,23 +77,23 @@ class Controller_Template_User extends Controller_Template{
         return $sublinks;
     }
     
-//    protected function get_loan_links(){
-//        $sublinks = array(
-//            /* Employee */
-//            /*'Application' => 'loan_application',
-//            'Create Request' => 'loan_create',
-//            'Send Request'  => 'loan_send',
-//            'Loan Approval' => 'loan_approval',
-//            'Release Check' => 'loan_check',
-//            'Release Voucher' => 'loan_voucher',
-//            'Collection'    => 'loan_collection',*/
-//            
-//            'Loan Types' => 'loan_type',
-//            'Loan Status' => 'loan_status',
-//        );
-//
-//        return $sublinks;
-//    }
+    protected function get_loan_links(){
+        $sublinks = array(
+            /* Employee */
+            'Application' => 'loan_application',
+            'Create Request' => 'loan_create',
+            'Send Request'  => 'loan_send',
+            'Loan Approval' => 'loan_approval',
+            'Release Check' => 'loan_check',
+            'Release Voucher' => 'loan_voucher',
+            'Collection'    => 'loan_collection',
+            
+            'Loan Types' => 'loan_type',
+            'Loan Status' => 'loan_status',
+        );
+
+        return $sublinks;
+    }
     
     protected function get_authentication_links(){
         $sublinks = array(
@@ -132,6 +103,16 @@ class Controller_Template_User extends Controller_Template{
         
         return $sublinks;
     }
-
+    
+    /* Employee */
+    
+    protected function get_incentives_links(){
+        $sublinks = array(
+            'Daily Cash Custodian' => 'incentives_custodian',
+            'Performance Per Cut Off'  => 'incentives_cutoff',
+        );
+        
+        return $sublinks;
+    }
 }
 ?>

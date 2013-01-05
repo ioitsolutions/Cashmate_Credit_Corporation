@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Home extends Controller_Template_User{
+class Controller_Home extends Controller_Template_Admin{
     
     public function before(){
         parent::before();

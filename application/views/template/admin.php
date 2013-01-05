@@ -4,6 +4,8 @@
     <head>
         <title><?php echo $title; ?></title>
         <?php echo $styles; ?>
+        <?php echo $scripts; ?>
+        <script type="text/javascript" src="/Cashmate_credit_corporation/media/scripts/dynamic_page.js"></script>
     </head>
     <body>
         <div id="banner">
@@ -37,15 +39,11 @@
             </div>
         </div>
         
-        <hr>
-        	
+	<hr>
+	
         <div id="menu">
             <ul id="nav">
-                <?php foreach ($links1 as $link => $url): ?>
-                <li><?= html::anchor($url, $link,array('id' => str_replace(' ','_',  strtolower($link)))) ?></li>
-                <?php endforeach; ?>
-                <br/>
-                <?php foreach ($links2 as $link => $url): ?>
+                <?php foreach ($links as $link => $url): ?>
                 <li><?= html::anchor($url, $link,array('id' => str_replace(' ','_',  strtolower($link)))) ?></li>
                 <?php endforeach; ?>
             </ul>			

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Loan_Request extends Controller_Template_User{
+class Controller_Loan_Request extends Controller_Template_Admin{
      /*Loan View Request*/
     
    public function before(){

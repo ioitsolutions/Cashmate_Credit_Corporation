@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Loan_Create extends Controller_Template_User{
+class Controller_Loan_Create extends Controller_Template_Admin{
     
     public function before(){
         parent::before();
@@ -10,7 +10,7 @@ class Controller_Loan_Create extends Controller_Template_User{
         $this->template->title_content = "Create Loan Request";
         $this->template->styles .= HTML::style('media/styles/emp/loan.css');
         $this->template->scripts .= HTML::script('media/scripts/emp/loan.js');
-        $this->template->sublinks = $this->get_loanrequest_links();
+        $this->template->sublinks = $this->get_loan_links();
         $this->template->content = $view;
         
    }

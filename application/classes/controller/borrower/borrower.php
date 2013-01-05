@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Controller_Borrower_Borrower extends Controller_Template_User{
+class Controller_Borrower_Borrower extends Controller_Template_Admin{
     
         public function before(){
         parent::before();

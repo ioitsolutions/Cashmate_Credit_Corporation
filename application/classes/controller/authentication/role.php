@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
-class Controller_Authentication_Role extends Controller_Template_User{
+class Controller_Authentication_Role extends Controller_Template_Admin{
     
     public function before(){
         
