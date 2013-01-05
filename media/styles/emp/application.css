@@ -31,6 +31,10 @@ fieldset{
 #floating-menu {background:#339900;border:1px;text-align:center;}
 #floating-menu a {text-decoration:none;color:#ffffff;padding: 0px 20px;font-size:7pt;}
 
-ul#nav li a#application{
+/*ul#nav li a#application{
+    background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
+}*/
+
+ul#nav li a#loan{
     background-color: #ffffff;padding: 10px 20px;text-decoration: none;line-height: 2.8em;color:#339900;
 }
