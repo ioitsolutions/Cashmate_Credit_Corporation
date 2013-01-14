@@ -10,13 +10,16 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->sublinks = array();
         $this->template->content = View::factory('login/employee')->set('values', $_POST)->bind('errors', $errors);
         if($_POST)
-        {          
+        {     
+            $employees = ORM::factory('employee')->where('id','=',$_POST['id'])->where('employee_password','=',$_POST['employee_password'])->find('id','first_name','middle_name','last_name','branch_id'); 
             try
-            {
-                $employees = ORM::factory('employee')->where('id','=',$_POST['employee_id'])->where('employee_password','=',$_POST['employee_password'])->find('id','first_name','middle_name','last_name','branch_id');    
+            { 
                 if($employees->id != "" || $employees->id != NULL)
                 {
-                    Cookie::set('employee_id',$employees->id);
+                    $area=ORM::factory('area')->where('id','=',$employees->area_id)->find('code');
+                    Cookie::set('id',$employees->id);
+                    Cookie::set('area_code',$area->code);
+                    echo"<script>alert('".$area->code."')</script>";
                     Cookie::set('branch_id',$employees->branch_id);
                     Cookie::set('first_name',$employees->first_name);
                     Cookie::set('middle_name',$employees->middle_name);
@@ -24,11 +27,11 @@ class Controller_Login extends Controller_Template_Login{
                     $this->redirect('login/role'); 
                 } 
                 else
-                    Cookie::set('emp_error','**Invalid Employee ID or Password');
+                    Cookie::set('emp_error','**Invalid Employee ID or Password**');
             }
             catch (ORM_Validation_Exception $e)
             {
-                $errors = $e->errors('models');
+                $errors = $e->errors('models/employee');
             }   
         }   
     }
@@ -43,7 +46,7 @@ class Controller_Login extends Controller_Template_Login{
         if($_POST)
         {
             $roles=ORM::factory('role')->where('role_password','=',$_POST['role_password'])->find('name','id');
-            $emprole=ORM::factory('emprole')->where('employee_id','=',Cookie::get('employee_id'))->find('role_id');
+            $emprole=ORM::factory('emprole')->where('employee_id','=',Cookie::get('id'))->find('role_id');
             Cookie::set('role_info',$roles->name);
             try
             {
@@ -52,11 +55,11 @@ class Controller_Login extends Controller_Template_Login{
                     $menu_privileges=ORM::factory('menuprivilege')->select('menu_id','privilege_id')->where('role_id', '=', $roles->id)->group_by('menu_id')->find_all();
                     foreach($menu_privileges as $menu_privilege)
                     {
-                        $menu_list=ORM::factory('menu')->select('menu_name','menu_id')->where('menu_id','=',$menu_privilege->menu_id)->group_by('menu_name')->find_all();
+                        $menu_list=ORM::factory('menu')->select('menu_name','id')->where('id','=',$menu_privilege->menu_id)->group_by('menu_name')->find_all();
                         foreach($menu_list as $menus =>$menu)
                         {
                             $menu_pass_value[]=$menu->menu_name;
-                            $submenus_list=ORM::factory('submenu')->select('submenu_name','submenu_id','menu_id')->where('menu_id','=',$menu->menu_id)->group_by('submenu_name')->find_all();
+                            $submenus_list=ORM::factory('submenu')->select('submenu_name','submenu_id','menu_id')->where('menu_id','=',$menu->id)->group_by('submenu_name')->find_all();
                             foreach($submenus_list as $submenus =>$submenu)
                             {
                                 $submenu_pass_value[]=$submenu->submenu_name;
@@ -73,11 +76,19 @@ class Controller_Login extends Controller_Template_Login{
                     {
                         Cookie::set('branch_name',$branches->name);
                         Cookie::set('branch_id',$branches->id);
+                        Cookie::set('branch_code',$branches->code);
                         $this->redirect('home');
                     }
                 }
                 else
-                    Cookie::set('role_error','**Invalid Role Password');
+                {
+                    Cookie::delete('id');
+                    Cookie::delete('branch_id');
+                    Cookie::delete('first_name');
+                    Cookie::delete('middle_name');
+                    Cookie::delete('last_name');
+                    $this->redirect('login/employee');
+                }   
             }
             catch (ORM_Validation_Exception $e)
             {
@@ -93,17 +104,19 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->content = View::factory('login/branch')->set('values', $_POST)->bind('errors', $errors);;
         if($_POST)
         {
+            $branches = ORM::factory('branch')->where('code','=',$_POST['branch_code'])->where('password','=',$_POST['branch_password'])->find('id','name');
             try
             {
                 if($branches->name != "" || $branches->name != NULL)
                 {
                     if(Cookie::get('role_info')=="Branch Manager")
                     {
-                        $branches = ORM::factory('branch')->where('code','=',$_POST['branch_code'])->where('password','=',$_POST['branch_password'])->find('id','name');
+                        
                         if(!empty($branches))
                         {
                             Cookie::set('branch_name',$branches->name);
                             Cookie::set('branch_id',$branches->id);
+                            Cookie::set('branch_code',$branches->code);
                             DB::update(ORM::factory('branch')->table_name())->set(array('web_status' => 1))->where('id', '=', $branches->id)->execute();
                             $this->redirect('home');
                         }
@@ -114,7 +127,7 @@ class Controller_Login extends Controller_Template_Login{
                     }
                 }
                 else
-                    Cookie::set('branch_error','**Invalid Branch ID or Password');
+                    Cookie::set('branch_error','**Invalid Branch ID or Password**');
                 
             }
             catch (ORM_Validation_Exception $e)

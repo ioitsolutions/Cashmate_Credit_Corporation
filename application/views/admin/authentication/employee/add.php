@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');?>
 <?php echo Form::open('authentication_employee/create/'); ?>
-<div id="form"			
+<form id="form"	method="post">		
     <fieldset id="borrower">
         <legend>Add Employee</legend>
         <div id="edit_body">
@@ -10,66 +10,71 @@
 			<table class="edit_content_table">
 				<tr>
 					<td>Employee ID:</td>
-					<td class="edit_align"><input type="text" name="emp_id"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="emp_id"/></td>
 				</tr>
 				<tr>
 					<td>First Name:</td>
-					<td class="edit_align"><input type="text" name="first_name"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="f_name"/></td>
 				</tr>
 				<tr>
 					<td>Middle Name:</td>
-					<td class="edit_align"><input type="text" name="mid_name"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="m_name"/></td>
 				</tr>
 				<tr>
 					<td>Last Name:</td>
-					<td class="edit_align"><input type="text" name="last_name"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="l_name"/></td>
 				</tr>
 				<tr>
 					<td>Address:</td>
-					<td class="edit_align"><input type="text" name="add"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="address"/></td>
 				</tr>
 				<tr>
 					<td>Contact Number:</td>
-					<td class="edit_align"><input type="text" name="cont_num"/></td>
+					<td class="edit_align"><input type="text" class="fields" name="c_number"/></td>
 				</tr>
 				<tr>
 					<td>Role:</td>
 					<td class="edit_align" name="role">
-						<select>
-							<option>Branch Manager</option>
-							<option>Branch Secretary</option>
-							<option>Branch Custodian</option>
+						<select name="role_list" id="role_list"class="fields" >
+							<?php foreach($role_list as $role){?>
+                                                        <option><?php echo $role->name;?></option>
+                                                        <?php } ?>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>Branch:</td>
-					<td class="edit_align" name="branch">
-						<select>
-							<option>Urdaneta</option>
-							<option>Angeles</option>
-							<option>Dagupan</option>
+					<td class="edit_align" name="branch"class="fields" >
+						<select name="branch_list" class="fields">
+							<?php foreach($branch_list as $branch){?>
+                                                        <option><?php echo $branch->name;?></option>
+                                                        <?php } ?>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>Area:</td>
-					<td class="edit_align" name="area">
-						<select>
-							<option>Urdaneta Area 1</option>
-							<option>Urdaneta Area 2</option>
-							<option>Urdaneta Area 3</option>
+					<td class="edit_align" name="area"class="fields" >
+						<select name="area_list" class="fields">
+							<?php foreach($area_list as $area){?>
+                                                        <option><?php echo $area->name;?></option>
+                                                        <?php } ?>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>Date Created:</td>
-					<td class="edit_align"><input type="text" name="date"/></td>
+					<td class="edit_align"><input type="text" id="datepicker" class="fields" name="calendar"/></td>
+                                        <script>
+                                            $(function() {
+                                            $( "#datepicker" ).datepicker();
+                                            });
+                                        </script>
 				</tr>
 				<tr>
 					<td>Status:</td>
-					<td class="edit_align" name="status">
-						<select>
+					<td class="edit_align">
+						<select name="status"class="fields" >
 							<option value="1">Active</option>
 							<option value="0">Inactive</option>
 						</select>
@@ -77,11 +82,11 @@
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td class="edit_align"><input type="text" name="password"/></td>
+					<td class="edit_align"><input type="password" class="fields" name="password"/></td>
 				</tr>
                                 <tr>
 					<td>Re-Type Password:</td>
-					<td class="edit_align"><input type="text" name="val_password"/></td>
+					<td class="edit_align"><input type="password" class="fields" name="val_password"/></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -94,4 +99,4 @@
 		</div>
                    
     </fieldset>
-</div>
+</form>

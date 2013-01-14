@@ -30,7 +30,8 @@ class Controller_Template_Employee extends Controller_Template{
         $data = null;
         $data .= HTML::script('media/scripts/jquery-1.8.3.js');
         $data .= HTML::script('media/scripts/jquery-ui-1.9.2.custom.js');
-        
+        $data .= HTML::script('http://code.jquery.com/jquery-1.8.3.js');
+        $data .= HTML::script('http://code.jquery.com/ui/1.9.2/jquery-ui.js');
         return $data;
     }
     

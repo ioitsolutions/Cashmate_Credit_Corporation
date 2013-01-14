@@ -10,6 +10,18 @@ class Model_Role extends ORM {
           'role_password' => array(
               array('not_empty')
           ),
+            'name'=>array(
+                array('not_empty')
+            ),
+        );
+    }
+    
+    public function roles()
+    {
+        return array(
+            'name'=>array(
+                array('not_empty')
+            ),
         );
     }
 }

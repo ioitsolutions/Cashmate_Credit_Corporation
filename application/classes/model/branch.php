@@ -13,6 +13,9 @@ class Model_Branch extends ORM {
           'password' => array(
               array('not_empty')
           ),
+            'name'=>array(
+                array('not_empty')
+            ),
         );
     }
 }

@@ -30,7 +30,7 @@ class Controller_Template_User extends Controller_Template{
         $data = null;
         $data .= HTML::script('media/scripts/jquery-1.8.3.js');
         $data .= HTML::script('media/scripts/jquery-ui-1.9.2.custom.js');
-        
+        $data .= HTML::script('media/scripts/jquery-ui.js');
         return $data;
     }
     
@@ -119,6 +119,8 @@ class Controller_Template_User extends Controller_Template{
         $sublinks = array(
           'Employee' => 'authentication_employee',
           'Role' => 'authentication_role',
+          'Menu' => 'authentication_menu',
+          'Privileges' => 'authentication_privilege',
         );
         
         return $sublinks;

@@ -1,61 +1,35 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');?>
-<?php echo Form::open('login/employee/'); ?>
 <div id="form">				
 	<div id="list_display">
 		<fieldset>
-                    
 			<legend>List of Default Roles</legend>
-			<table id="branch_table_display" cellspacing = 0 border=1>
+                        <a href="create">Add a New Role</a> 
+			<table id="branch_table_display" cellspacing = 0>
 				<tr>
+                                        <th>Role ID</th>
 					<th>Role Name</th>
-					<th>Menu</th>
-					<th>Privileges</th>
-					<th>View Employee List</th>
+                                        <th>Visible</th>
+                                        <th></th>
 					<th>Date Created</th>
+                                        <th></th>
+                                        <th></th>
 				</tr>
-				<tr>
-					<td><p id="table_content">Branch Secretary</p></td>
-					<td><p id="table_content">Loan Application Form</p></td>
-					<td>
-						<table>
-							<tr><td>View</td></tr>
-							<tr><td>Save/Create</td></tr>
-							<tr><td>Edit</td></tr>
-						</table>
-					</td>
-					<td><a href="viewemployee" id="table_content">View Employee</a></td>
-					<td><p id="table_content">12-12-2012</p></td>
-				</tr>
-			</table>
-		</fieldset>
-		<br/>
-		<fieldset>
-			<legend>List of Additional Roles</legend>
-			<a href="create">Add a New Role</a> 
-			<table id="branch_table_display" cellspacing = 0 border=1>
-				<tr>
-					<th>Role Name</th>
-					<th>Menu</th>
-					<th>Privileges</th>
-					<th>View Employee List</th>
-					<th>Date Created</th>
-					<th>Delete</th>
-				</tr>
-				<tr>
-					<td><p id="table_content">Branch Secretary</p></td>
-					<td><p id="table_content">Loan Application Form</p></td>
-					<td>
-						<table>
-							<tr><td>View</td></tr>
-							<tr><td>Save/Create</td></tr>
-							<tr><td>Edit</td></tr>
-						</table>
-						<a href="update" id="table_content">Edit</a>
-					</td>
-					<td><a href="addemployee" id="table_content">View Employee</a></td>
-					<td><p id="table_content">12-12-2012</p></td>
-					<td><a href="" id="table_content">Delete</a></td>
-				</tr>
+                                <?php foreach($roles as $role){?>
+                                    <tr>
+                                        <td class="table_content"><?php echo $role->id;?></td>
+                                        <td class="table_content"><?php echo $role->name;?></td>
+                                        <td class="table_content">
+                                            <?php 
+                                                if($role->visible==0)echo"Visible";
+                                                else echo"Hidden";
+                                            ?>
+                                        </td>
+					<td class="table_content"><a href="viewemployee">View Employee</a></td>
+					<td class="table_content"><p><?php  $role->update_ts?></p></td>
+                                        <td class="table_content"><a href="update"><?php echo HTML::anchor("/authentication_role/update/".$role->id, "Edit"); ?></a></td>
+					<td class="table_content"><a href="delete"><?php echo HTML::anchor("/authentication_role/delete/".$role->id, "Delete"); ?></a></td>
+                                    </tr>
+                                <?php }?>
 			</table>
 		</fieldset>
 	</div>

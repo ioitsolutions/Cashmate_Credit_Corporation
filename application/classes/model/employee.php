@@ -9,10 +9,11 @@ class Model_Employee extends ORM {
         return array(
           'id' => array(
               array('not_empty'),
-              array(array($this, 'employee_id')),
+              array('required'),
           ),
           'employee_password' => array(
-              array('not_empty')
+              array('not_empty'),
+              array('required'),
           ),
         );
     }

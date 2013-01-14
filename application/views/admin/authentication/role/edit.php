@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');?>
-<div id="form" method="post">	
-    <?php echo Form::open('authentication/role/create/'); ?>
+<form id="form" method="post">	
+    <?php echo Form::open('authentication_role/update'); ?>
     <fieldset id="privilege">
         <legend>Edit Role Privileges</legend>
         <div id="edit_body">
@@ -8,45 +8,47 @@
 				<p>Edit Role Privileges</p>
 			</div>
 			<table class="edit_content_table">
+                                <tr>
+					<td>Role ID:</td>
+					<td class="edit_align" id="role">
+                                            <input type="text" class="fields" disabled name="role_id" value="<?php echo $role->id; ?>"/>
+                                        </td>
+				</tr>
 				<tr>
 					<td>Role Name:</td>
-					<td class="edit_align" id="roles">
-                                            <select>
-                                               
+					<td class="edit_align" id="role">
+                                            <input type="text" class="fields" name="role" value="<?php echo $role->name; ?>"/>
+                                        </td>
+				</tr>
+                                <tr>
+					<td>Status:</td>
+					<td class="edit_align" id="status">
+                                            <select class="fields" name="visible">
+                                                <option value="0">Visible</option>
+                                                <option value="1">Hidden</option>
                                             </select>
                                         </td>
 				</tr>
-				<tr>
-					<td>Menu Name:</td>
-					<td class="edit_align" id="menus">
-                                            <select>
-                                                
-                                                
-                                            </select>
-                                        </td>
+                                <tr>
+					<td>Date Created:</td>
+					<td class="edit_align"><input type="text" class="fields" id="datepicker" name="calendar" value="<?php echo $role->update_ts; ?>"/></td>
+                                        <script>
+                                            $(function() {
+                                            $( "#datepicker" ).datepicker();
+                                            });
+                                        </script>
 				</tr>
-				<tr>
-					<table id="authentication_display">
-                                            <tr>
-                                                <th>View</th>
-                                                <th>Save/Create</th>
-                                                <th>Edit</th>
-                                                <th>Print</th>
-                                                <th>Post</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="table_content"><input type="checkbox"/></td>
-                                                <td class="table_content"><input type="checkbox"/></td>
-                                                <td class="table_content"><input type="checkbox"/></td>
-                                                <td class="table_content"><input type="checkbox"/></td>
-                                                <td class="table_content"><input type="checkbox"/></td>
-                                            </tr>
-                                        </table>
-                                <input type="submit" value="Add/Edit"/>
-                                <input type="button" value="Cancel"/>
-				</tr>
-			</table>
-		</div>
-                   
+                                <tr>
+                                    <td>Role Password:</td>
+                                    <td class="edit_align"><input type="password" class="fields" name="password"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Re-type Role Password:</td>
+                                    <td class="edit_align"><input type="password" class="fields" name="confirm_password"/></td>
+                                </tr>
+			</table><br/>
+                        <input type="submit" value="Edit"/>
+                        <input type="button" value="Cancel"/>
+		</div> 
     </fieldset>
-</div>
+</form>

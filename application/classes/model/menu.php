@@ -5,7 +5,7 @@ class Model_Menu extends ORM {
     public function rules(){
         
         return array(
-          'menu_id' => array(
+          'id' => array(
               array('not_empty')
           ),
           'menu_name' => array(

@@ -5,13 +5,13 @@
     <table align="center">
         
         <tr>
-            <td><label for="employee_id">Employee Id:</label></td> 
-            <td><input type="text" name="employee_id"value="<?= Arr::get($values, 'id'); ?>"/></td>
-            <td><label for="employee_id" class="error"/><?php echo Arr::get($errors, 'id'); ?></td>
+            <td><label for="id">Employee Id:</label></td> 
+            <td><input type="text" name="id"/></td>
+            <td><label for="id" class="error"/><?php echo Arr::get($errors, 'id'); ?></td>
         </tr>
         <tr>
             <td><label for="employee_password">Password:</label></td> 
-            <td><input type="password" name="employee_password"value="<?= Arr::get($values, 'employee_password'); ?>"/></td>
+            <td><input type="password" name="employee_password"/></td>
             <td><label for="employee_password" class="error"/><?php echo Arr::get($errors, 'employee_password'); ?></td>
         </tr>
         <tr>

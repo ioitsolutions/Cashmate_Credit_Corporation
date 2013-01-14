@@ -30,6 +30,7 @@ class Controller_Template_Admin extends Controller_Template{
         $data = null;
         $data .= HTML::script('media/scripts/jquery-1.8.3.js');
         $data .= HTML::script('media/scripts/jquery-ui-1.9.2.custom.js');
+        $data .= HTML::script('media/scripts/dynamic_page.js');
         
         return $data;
     }
@@ -38,7 +39,7 @@ class Controller_Template_Admin extends Controller_Template{
         $links = array(
             'Home' => 'home',
             'Bulletin Contents' => 'bulletin_announcement',
-            'Authentication' => 'authentication_role',
+            'Authentication' => 'authentication_employee',
             'Branch' => 'branch_branches',
             'Borrowers' => 'borrower_borrower',
             'Loan' => 'loan_type',
@@ -87,7 +88,6 @@ class Controller_Template_Admin extends Controller_Template{
             'Release Check' => 'loan_check',
             'Release Voucher' => 'loan_voucher',
             'Collection'    => 'loan_collection',
-            
             'Loan Types' => 'loan_type',
             'Loan Status' => 'loan_status',
         );
@@ -99,6 +99,8 @@ class Controller_Template_Admin extends Controller_Template{
         $sublinks = array(
           'Employee' => 'authentication_employee',
           'Role' => 'authentication_role',
+          'Menu' => 'authentication_menu',
+          'Roles and Privileges' => 'authentication_privilege',
         );
         
         return $sublinks;

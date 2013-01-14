@@ -22,8 +22,7 @@ class Controller_Logout extends Controller_Home{
         }
         else
         {
-            echo"<script type='text/javascript'>alert('You dount have privilege to perform this task');</script>";
-            //$this->redirect('home');
+            $this->redirect('home');
         }
     }
     public function action_employee(){
@@ -35,8 +34,8 @@ class Controller_Logout extends Controller_Home{
         Cookie::delete('role_info');
         Cookie::delete('branch_id');
         Cookie::delete('emp_error');
-            Cookie::delete('role_error');
-            Cookie::delete('branch_error');
+        Cookie::delete('role_error');
+        Cookie::delete('branch_error');
         //Cookie::delete('emp_menu');
         //Cookie::delete('emp_submenu');
         $this->redirect('login/employee');

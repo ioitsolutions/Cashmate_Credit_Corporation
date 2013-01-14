@@ -1,5 +1,5 @@
 #list_display{
-	width:1000px;
+	width:950px;
 	height:380px;
 	overflow-y:scroll;
 	}
@@ -15,7 +15,7 @@
 	 cellspacing:2;
 	 cellpadding:3;
 	 text-align:left;
-	 width:307;
+	 width:500px;
 	}
 .textarea_edit{
 	width:155px;
@@ -30,12 +30,12 @@
 div#edit_header{
 	background-color:#339900;
 	height:20px;
-	width:307px;
+	width:500px;
 	font-weight:bold
 	}
 div#edit_body{
 	height:auto;
-	width:307px;
+	width:500px;
 	border:solid 1px;
 	border-color:#339900;
 	margin:auto;
@@ -54,6 +54,7 @@ table#authentication_display{
     border-collapse: collapse;
     border-spacing: 0px;
     width:308px;
+    margin:auto;
 }
 
 table#authentication_display td.table_content{
@@ -73,3 +74,17 @@ table#authentication_display td.table_content{
     font-weight: bold;
 
 }
+
+.fields{
+    width:300px;
+}
+
+#table_display{
+	text-align: left;
+    /*font-family: Verdana, Geneva, Arial, Helvetica, sans-serif ;*/
+    font-weight: normal;
+    font-size: 14px;
+    border: 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+	}

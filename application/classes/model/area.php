@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 class Model_Area extends ORM{
-    
+    protected $_table_name = 'areas';
     protected $_belongs_to = array('branch' => array ());
     
     public function rules(){
