@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 class Controller_Authentication_Privilege extends Controller_Template_Admin{
-
+    public $role="";
     public function before(){
         parent::before();
         $this->template->title = "Cashmate Credit Corporation: Roles and Privileges";
@@ -22,16 +22,15 @@ class Controller_Authentication_Privilege extends Controller_Template_Admin{
     }
     
     public function action_update(){
-        $role="";
-        $menu="";
-        $value="";
         $view = View::factory('admin/authentication/privilege/edit');
         $this->template->title_content = "Role - Administration Edit Role";
         $view->set('title_form','Edit Role Record');
         $view->set('btn_title','Save');
         $this->template->content = $view;
-        echo"<script>alert('".$role."')</script>";
-        //DB::update('role_menu_privileges')->set(array('status'=>0));
+        if($_POST)
+        {
+            
+        }
     }
 }
 ?>
