@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');?>
-<div id="form">				
+<form id="form" method="post">	
+    <?php echo Form::open('authentication_privilege/update'); ?>
 	<div id="list_display">
 		<fieldset>
 			<legend>List of Default Roles and Privileges</legend>
@@ -12,10 +13,12 @@
 					<th>Edit</th>
 					<th>Post</th>
 					<th>Print</th>
+                                        <th></th>
 				</tr>
                                 <?php foreach($roles as $role){?>
                                     <tr>
                                         <td class="table_content"  style="color:white;background-color:#339900;font-weight:bold;"><?php echo $role->name;?></td>
+                                        <td class="table_content"  style="background-color:#339900;"></td>
                                         <td class="table_content"  style="background-color:#339900;"></td>
                                         <td class="table_content"  style="background-color:#339900;"></td>
                                         <td class="table_content"  style="background-color:#339900;"></td>
@@ -51,10 +54,11 @@
                                             <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $edit value='3' name='edit' id='edit'/></td>
                                             <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $print value='4' name='print' id='print'/></td>
                                             <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $post value='5' name='post' id='post'/></td>
+                                            <td class='table_content'>input type='submit' value='Edit'><a href='delete'>echo HTML::anchor('/authentication_role/delete/'.$role->id, 'Edit')</a></td>
                                         </tr>";
                                      }?>            
                                 <?php }?>                                
 			</table>
 		</fieldset>
 	</div>
-</div>
+</form>
