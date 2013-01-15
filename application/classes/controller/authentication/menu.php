@@ -6,6 +6,7 @@ class Controller_Authentication_Menu extends Controller_Template_Admin{
         parent::before();
         $this->template->title = "Cashmate Credit Corporation: Authentication";
         $this->template->styles .= HTML::style('media/styles/admin/authentication.css');
+        $this->template->scripts .= HTML::script('media/scripts/admin/authentication.js');
         $this->template->sublinks = $this->get_authentication_links();
     }
     
@@ -50,7 +51,7 @@ class Controller_Authentication_Menu extends Controller_Template_Admin{
         $this->template->content = $view;
         if($_POST)
         {
-             DB::update('menus')->set(array('menu_name'=>$_POST['menu_name'],'description'=>$_POST['menu_description']))->where('id','=',$menu_id)->execute();
+             DB::update('menus')->set(array('menu_name'=>$_POST['menu_name'],'description'=>$_POST['menu_description'],'date_modified'=>$_POST['calendar']))->where('id','=',$menu_id)->execute();
              $this->redirect('authentication_menu/list');
         }
     }

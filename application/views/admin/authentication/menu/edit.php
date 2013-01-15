@@ -20,9 +20,13 @@
                     <td>Description:</td>
                     <td class="edit_align"><input type="text" name="menu_description" class="fields" value="<?php echo $menu->description; ?>"/></td>
 		</tr>
+                <tr>
+                    <td>Date Modified:</td>
+                    <td class="edit_align"><input type="text" class="fields datepicker" name="calendar" value="<?php echo $menu->date_modified; ?>"/></td>
+		</tr>
             </table><br/>
             <input type="submit" value="Edit"/>
-            <input type="button" value="Cancel"/>
+            <input type="button" value="Cancel"onClick="window.location.href='http://localhost/Cashmate_Credit_Corporation/authentication_menu/list'"/>
 	</div>
     </fieldset>
 </form>

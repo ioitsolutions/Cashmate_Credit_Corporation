@@ -6,6 +6,7 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         parent::before();
         $this->template->title = "Cashmate Credit Corporation: Authentication";
         $this->template->styles .= HTML::style('media/styles/admin/authentication.css');
+        $this->template->scripts .= HTML::script('media/scripts/admin/authentication.js');
         $this->template->sublinks = $this->get_authentication_links();
     }
     

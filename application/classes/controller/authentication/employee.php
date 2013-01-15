@@ -6,7 +6,7 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
         parent::before();
         $this->template->title = "Cashmate Credit Corporation: Authentication";
         $this->template->styles .= HTML::style('media/styles/admin/authentication.css');
-        $this->template->scripts .= HTML::script('media/scripts/admin/bulletin.js');
+        $this->template->scripts .= HTML::script('media/scripts/admin/authentication.js');
         $this->template->sublinks = $this->get_authentication_links();
     }
    
@@ -95,7 +95,7 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
                 $role=ORM::factory('role')->where('name','=',$_POST['role'])->find('id');
                 $branch=ORM::factory('branch')->where('name','=',$_POST['branch'])->find('id');
                 $area=ORM::factory('area')->where('name','=',$_POST['area'])->find('id');
-                DB::update('employees')->set(array('first_name' => $_POST['f_name'],'middle_name'=>$_POST['m_name'],'last_name'=>$_POST['l_name'],'contact_number'=>$_POST['c_number'],'address'=>$_POST['address'],'role_id'=>$role->id,'branch_id'=>$branch->id,'area_id'=>$area->id,'visible'=>$_POST['status']))->where('id', '=', $_POST['emp_id'])->execute();
+                DB::update('employees')->set(array('first_name' => $_POST['f_name'],'middle_name'=>$_POST['m_name'],'last_name'=>$_POST['l_name'],'contact_number'=>$_POST['c_number'],'address'=>$_POST['address'],'role_id'=>$role->id,'branch_id'=>$branch->id,'area_id'=>$area->id,'visible'=>$_POST['status'],'update_ts'=>$_POST['calendar']))->where('id', '=', $_POST['emp_id'])->execute();
                 $this->redirect('authentication_employee/list');
             }
             else if(isset($_POST['privilege']))

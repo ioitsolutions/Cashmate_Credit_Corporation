@@ -30,13 +30,8 @@
                                         </td>
 				</tr>
                                 <tr>
-					<td>Date Created:</td>
-					<td class="edit_align"><input type="text" class="fields" id="datepicker" name="calendar" value="<?php echo $role->update_ts; ?>"/></td>
-                                        <script>
-                                            $(function() {
-                                            $( "#datepicker" ).datepicker();
-                                            });
-                                        </script>
+					<td>Date Modified:</td>
+					<td class="edit_align"><input type="text" class="fields datepicker" id="datepicker" name="calendar" value="<?php echo $role->update_ts; ?>"/></td>
 				</tr>
                                 <tr>
                                     <td>Role Password:</td>
@@ -48,7 +43,7 @@
                                 </tr>
 			</table><br/>
                         <input type="submit" value="Edit"/>
-                        <input type="button" value="Cancel"/>
+                        <input type="button" value="Cancel" onClick="window.location.href='http://localhost/Cashmate_Credit_Corporation/authentication_role/list'"/>
 		</div> 
     </fieldset>
 </form>
