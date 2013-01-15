@@ -11,7 +11,8 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->content = View::factory('login/employee')->set('values', $_POST)->bind('errors', $errors);
         if($_POST)
         {     
-            $employees = ORM::factory('employee')->where('id','=',$_POST['id'])->where('employee_password','=',$_POST['employee_password'])->find('id','first_name','middle_name','last_name','branch_id'); 
+            $password=hash('md5', $_POST['employee_password']);
+            $employees = ORM::factory('employee')->where('id','=',$_POST['id'])->where('employee_password','=',$password)->find('id','first_name','middle_name','last_name','branch_id'); 
             try
             { 
                 if($employees->id != "" || $employees->id != NULL)
@@ -45,7 +46,8 @@ class Controller_Login extends Controller_Template_Login{
         $pass_value[]=array();
         if($_POST)
         {
-            $roles=ORM::factory('role')->where('role_password','=',$_POST['role_password'])->find('name','id');
+            $password=hash('md5', $_POST['role_password']);
+            $roles=ORM::factory('role')->where('role_password','=',$password)->find('name','id');
             $emprole=ORM::factory('emprole')->where('employee_id','=',Cookie::get('id'))->find('role_id');
             Cookie::set('role_info',$roles->name);
             try
@@ -104,14 +106,14 @@ class Controller_Login extends Controller_Template_Login{
         $this->template->content = View::factory('login/branch')->set('values', $_POST)->bind('errors', $errors);;
         if($_POST)
         {
-            $branches = ORM::factory('branch')->where('code','=',$_POST['branch_code'])->where('password','=',$_POST['branch_password'])->find('id','name');
+            $password=hash('md5', $_POST['branch_password']);
+            $branches = ORM::factory('branch')->where('code','=',$_POST['branch_code'])->where('password','=',$password)->find('id','name');
             try
             {
                 if($branches->name != "" || $branches->name != NULL)
                 {
-                    if(Cookie::get('role_info')=="Branch Manager")
+                    if(Cookie::get('role_info')=="Branch Manager" || Cookie::get('role_info')=="President" || Cookie::get('role_info')=="Administrator")
                     {
-                        
                         if(!empty($branches))
                         {
                             Cookie::set('branch_name',$branches->name);

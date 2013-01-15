@@ -37,8 +37,9 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         {
             if($_POST['password']==$_POST['confirm_password'])
             {
+                $password=hash('md5', $_POST['password']);
                  DB::insert('roles', array('name','role_password','visible','update_ts','update_user'))
-                        ->values(array($_POST['role'],$_POST['password'],0,$_POST['calendar'],''))->execute();
+                        ->values(array($_POST['role'],$password,0,$_POST['calendar'],''))->execute();
             }
         }
     }
@@ -56,7 +57,8 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         {
             if($_POST['password']==$_POST['confirm_password'])
             {
-                DB::update('roles')->set(array('name'=>$_POST['role'],'update_ts'=>$_POST['calendar'],'role_password'=>$_POST['password'],'visible'=>$_POST['visible']))->where('id','=',$role_id)->execute();
+                $password=hash('md5', $_POST['password']);
+                DB::update('roles')->set(array('name'=>$_POST['role'],'update_ts'=>$_POST['calendar'],'role_password'=>$password,'visible'=>$_POST['visible']))->where('id','=',$role_id)->execute();
                 $this->redirect('authentication_role/list');
             }
         }

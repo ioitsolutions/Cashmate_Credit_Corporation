@@ -2,7 +2,7 @@
 class Controller_Logout extends Controller_Home{
     
     public function action_branch(){
-        if(Cookie::get('role_info')=="Branch Manager")
+        if(Cookie::get('role_info')=="Branch Manager" || Cookie::get('role_info')=="President" || Cookie::get('role_info')=="Administrator")
         {
             DB::update(ORM::factory('branch')->table_name())->set(array('web_status' => 0))->where('id', '=', Cookie::get('branch_id'))->execute();
             Cookie::delete('branch_id');
@@ -15,8 +15,8 @@ class Controller_Logout extends Controller_Home{
             Cookie::delete('emp_error');
             Cookie::delete('role_error');
             Cookie::delete('branch_error');
-            //Cookie::delete('emp_menu');
-            //Cookie::delete('emp_submenu');
+            session::instance()->delete('emp_menu');
+            session::instance()->delete('emp_submenu');
             $this->redirect('login/employee');
             
         }
@@ -36,8 +36,8 @@ class Controller_Logout extends Controller_Home{
         Cookie::delete('emp_error');
         Cookie::delete('role_error');
         Cookie::delete('branch_error');
-        //Cookie::delete('emp_menu');
-        //Cookie::delete('emp_submenu');
+        session::instance()->delete('emp_menu');
+        session::instance()->delete('emp_submenu');
         $this->redirect('login/employee');
     }
 }

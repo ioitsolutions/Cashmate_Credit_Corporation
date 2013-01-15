@@ -31,8 +31,8 @@
                 <p id="" class="banner_info_record second_row third_column"><?php echo date("F jS, Y");?></p>
                 <p id="Time" onload="Timer()" class="banner_info_record second_row fourth_column"></p>
                 <div id="banner_link_container">
-                    <a href="" id="branch_change_password" class="banner_link banner_info">Branch Change Password</a>
-                    <a href="" id="employee_change_password" class="banner_link banner_info">Employee Change Password</a>
+                    <a href="<?php echo url::site().'changepassword/branch' ?>" id="branch_change_password" class="banner_link banner_info">Change Branch Password</a>
+                    <a href="<?php echo url::site().'changepassword/employee' ?>" id="employee_change_password" class="banner_link banner_info">Change Employee Password</a>
                     <a href="<?php echo url::site().'logout/branch' ?>" id="branch_log_out" class="banner_link banner_info">Branch Log Out</a>
                     <a href="<?php echo url::site().'logout/employee' ?>" id="employee_log_out" class="banner_link banner_info">Employee Log Out</a>
                 </div> 

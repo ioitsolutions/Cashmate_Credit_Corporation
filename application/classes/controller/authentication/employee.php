@@ -65,8 +65,9 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
                 $role=ORM::factory('role')->where('name','=',$_POST['role_list'])->find('id');
                 $branch=ORM::factory('branch')->where('name','=',$_POST['branch_list'])->find('id');
                 $area=ORM::factory('area')->where('name','=',$_POST['area_list'])->find('id');
+                $password=hash('md5', $_POST['password']);
                 DB::insert('employees', array('first_name','middle_name','last_name','contact_number','address','employee_password','role_id','branch_id','area_id','visible','update_ts'))
-                    ->values(array($_POST['f_name'],$_POST['m_name'],$_POST['l_name'],$_POST['c_number'],$_POST['address'],$_POST['password'],$role->id,$branch->id,$area->id,$_POST['calendar'],$_POST['status']))
+                    ->values(array($_POST['f_name'],$_POST['m_name'],$_POST['l_name'],$_POST['c_number'],$_POST['address'],$password,$role->id,$branch->id,$area->id,$_POST['calendar'],$_POST['status']))
                     ->execute();
                 $this->redirect('authentication_employee/list');
             }
