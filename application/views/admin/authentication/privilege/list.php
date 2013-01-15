@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');?>
-<form id="form" method="post">	
+<form id="form" method="get">	
     <?php echo Form::open('authentication_privilege/update'); ?>
 	<div id="list_display">
 		<fieldset>
@@ -46,15 +46,17 @@
                                             if($privilege->privilege_id==5 && $privilege->status==0)
                                                 $post="checked";
                                         }
+                                        $link='/Cashmate_Credit_Corporation/authentication_privilege/update/'.$role->id." ".$menu->id;
+                                        $link2=HTML::anchor("/authentication_privilege/clear/".$role->id." ".$menu->id, "Clear");
                                         echo"<tr>
                                             <td class='table_content'></td>
                                             <td class='table_content'>$menu->menu_name</td>
-                                            <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $view value='1' name='view' id='view'/></td>
-                                            <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $save value='2' name='save' id='save'/></td>
-                                            <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $edit value='3' name='edit' id='edit'/></td>
-                                            <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $print value='4' name='print' id='print'/></td>
-                                            <td class='table_content'><input type='checkbox' onclick='saveChange($role->id,$menu->id,this.value)' $post value='5' name='post' id='post'/></td>
-                                            <td class='table_content'>input type='submit' value='Edit'><a href='delete'>echo HTML::anchor('/authentication_role/delete/'.$role->id, 'Edit')</a></td>
+                                            <td class='table_content'><input type='checkbox' $view value='$link 1' onClick='if (this.checked) { window.location = this.value;}' onClick='if (!this.checked) {window.location = this.value 1;}' id='view'/></td>
+                                            <td class='table_content'><input type='checkbox' $save value='$link 2' onClick='if (this.checked) { window.location = this.value;}' id='save'/></td>
+                                            <td class='table_content'><input type='checkbox' $edit value='$link 3' onClick='if (this.checked) { window.location = this.value;}' id='edit'/></td>
+                                            <td class='table_content'><input type='checkbox' $print value='$link 4' onClick='if (this.checked) { window.location = this.value;}' id='print'/></td>
+                                            <td class='table_content'><input type='checkbox' $post value='$link 5' onClick='if (this.checked) { window.location = this.value;}' id='post'/></td>
+                                            <td class='table_content'><a href='clear'>$link2</a></td>
                                         </tr>";
                                      }?>            
                                 <?php }?>                                
