@@ -12,14 +12,51 @@ class Model_Employee extends ORM {
         return array(
           'id' => array(
               array('not_empty'),
-              array('required'),
           ),
           'employee_password' => array(
               array('not_empty'),
-              array('required'),
           ),
         );
     }
+    
+    public function validate_login($arr) {
+        return Validation::factory($arr)
+            ->rule('id', 'not_empty')
+            ->rule('employee_password', 'not_empty');
+    }
+    
+    public function validate_changepassword($arr)
+    {
+        return Validation::factory($arr)
+            ->rule('old_password', 'not_empty')
+            ->rule('new_password', 'not_empty')
+            ->rule('validate_password', 'not_empty');
+    }
+    
+    public function validate_add($arr)
+    {
+        return Validation::factory($arr)
+            ->rule('f_name', 'not_empty')
+            ->rule('m_name', 'not_empty')
+            ->rule('l_name', 'not_empty')
+            ->rule('c_number', 'not_empty')
+            ->rule('address', 'not_empty')
+            ->rule('calendar', 'not_empty')
+            ->rule('new_password', 'not_empty')
+            ->rule('validate_password', 'not_empty');
+    }
+    
+    public function validate_update($arr)
+    {
+        return Validation::factory($arr)
+            ->rule('f_name', 'not_empty')
+            ->rule('m_name', 'not_empty')
+            ->rule('l_name', 'not_empty')
+            ->rule('c_number', 'not_empty')
+            ->rule('address', 'not_empty')
+            ->rule('calendar', 'not_empty');
+    }
+    
     public function employee_id($id)
     {
         return ORM::factory('employee', array('id' => $id))->loaded();

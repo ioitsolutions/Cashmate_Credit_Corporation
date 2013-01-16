@@ -28,31 +28,45 @@ class Controller_Authentication_Menu extends Controller_Template_Admin{
     }
     
     public function action_create(){
-        $view = View::factory('admin/authentication/menu/add');
+        $view = View::factory('admin/authentication/menu/add')->bind('validator', $validator)->bind('errors', $errors);
         $this->template->title_content = "Role - Administration Add Menu";
-        $view->set('title_form','Add Role Record');
-        $view->set('btn_title','Add');
         $this->template->content = $view;
         if($_POST)
         {
-            DB::insert('menus',array('menu_name','description','date_modified'))
-                    ->values(array($_POST['menu'],$_POST['Description'],date("MM-dd-YYYY")))->execute();
-            $this->redirect('authentication_menu/list');
+            $menu=ORM::factory('menu');
+            $validator=$menu->validate_add(arr::extract($_POST,array('menu','description','calendar')));
+            if($validator->check())
+            {
+                DB::insert('menus',array('menu_name','description','date_modified'))
+                    ->values(array($_POST['menu'],$_POST['description'],$_POST['calendar']))->execute();
+                $this->redirect('authentication_menu/list');
+            }
+            else
+            {
+                $errors = $validator->errors('errors');
+            }
         }
     }
     
     public function action_update(){
         $menu_id=$this->request->param('id');
-        $view = View::factory('admin/authentication/menu/edit');
+        $view = View::factory('admin/authentication/menu/edit')->bind('validator', $validator)->bind('errors', $errors);
         $view->menu=ORM::factory('menu')->where('id','=',$menu_id)->find('menu_name','description');
         $this->template->title_content = "Role - Administration Edit Role";
-        $view->set('title_form','Edit Role Record');
-        $view->set('btn_title','Save');
         $this->template->content = $view;
         if($_POST)
         {
-             DB::update('menus')->set(array('menu_name'=>$_POST['menu_name'],'description'=>$_POST['menu_description'],'date_modified'=>$_POST['calendar']))->where('id','=',$menu_id)->execute();
-             $this->redirect('authentication_menu/list');
+            $menu=ORM::factory('menu');
+            $validator=$menu->validate_update(arr::extract($_POST,array('menu','description','calendar')));
+            if($validator->check())
+            {
+                DB::update('menus')->set(array('menu_name'=>$_POST['menu'],'description'=>$_POST['description'],'date_modified'=>$_POST['calendar']))->where('id','=',$menu_id)->execute();
+                $this->redirect('authentication_menu/list');
+            }
+            else
+            {
+                $errors = $validator->errors('errors');
+            } 
         }
     }
     

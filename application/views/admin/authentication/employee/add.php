@@ -11,27 +11,45 @@
 				<tr>
 					<td>Employee ID:</td>
 					<td class="edit_align"><input type="text" class="fields" name="emp_id"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="emp_id" class="error"/><?php echo Arr::get($errors, 'emp_id'); ?></td>
+                                </tr>
 				<tr>
 					<td>First Name:</td>
 					<td class="edit_align"><input type="text" class="fields" name="f_name"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="f_name" class="error"/><?php echo Arr::get($errors, 'f_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Middle Name:</td>
 					<td class="edit_align"><input type="text" class="fields" name="m_name"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="m_name" class="error"/><?php echo Arr::get($errors, 'm_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Last Name:</td>
 					<td class="edit_align"><input type="text" class="fields" name="l_name"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="l_name" class="error"/><?php echo Arr::get($errors, 'l_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Address:</td>
 					<td class="edit_align"><input type="text" class="fields" name="address"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="address" class="error"/><?php echo Arr::get($errors, 'address'); ?></td>
+                                </tr>
 				<tr>
 					<td>Contact Number:</td>
 					<td class="edit_align"><input type="text" class="fields" name="c_number"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="c_number" class="error"/><?php echo Arr::get($errors, 'c_number'); ?></td>
+                                </tr>
 				<tr>
 					<td>Role:</td>
 					<td class="edit_align" name="role">
@@ -64,13 +82,11 @@
 				</tr>
 				<tr>
 					<td>Date Created:</td>
-					<td class="edit_align"><input type="text" id="datepicker" class="fields" name="calendar"/></td>
-                                        <script>
-                                            $(function() {
-                                            $( "#datepicker" ).datepicker();
-                                            });
-                                        </script>
-				</tr>
+					<td class="edit_align"><input type="text" id="datepicker" class="fields datepicker" name="calendar"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="calendar" class="error"/><?php echo Arr::get($errors, 'calendar'); ?></td>
+                                </tr>
 				<tr>
 					<td>Status:</td>
 					<td class="edit_align">
@@ -82,12 +98,18 @@
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td class="edit_align"><input type="password" class="fields" name="password"/></td>
-				</tr>
+					<td class="edit_align"><input type="password" class="fields" name="new_password"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="new_password" class="error"/><?php echo Arr::get($errors, 'new_password'); ?></td>
+                                </tr>
                                 <tr>
 					<td>Re-Type Password:</td>
-					<td class="edit_align"><input type="password" class="fields" name="val_password"/></td>
-				</tr>
+					<td class="edit_align"><input type="password" class="fields" name="validate_password"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="validate_password" class="error"/><?php echo Arr::get($errors, 'validate_password'); ?></td>
+                                </tr>
 				<tr>
 					<td></td>
 					<td class="edit_align">

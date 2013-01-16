@@ -16,6 +16,27 @@ class Model_Role extends ORM {
         );
     }
     
+    public function validate_login($arr) {
+        return Validation::factory($arr)
+            ->rule('role_password', 'not_empty');
+    }
+    
+    public function validate_update($arr) {
+        return Validation::factory($arr)
+            ->rule('role', 'not_empty')
+            ->rule('new_password', 'not_empty')
+            ->rule('validate_password', 'not_empty')
+            ->rule('calendar', 'not_empty');
+    }
+    
+    public function validate_add($arr) {
+        return Validation::factory($arr)
+            ->rule('role', 'not_empty')
+            ->rule('new_password', 'not_empty')
+            ->rule('validate_password', 'not_empty')
+            ->rule('calendar', 'not_empty');
+    }
+    
     public function roles()
     {
         return array(

@@ -50,7 +50,7 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
     }
     
     public function action_create(){
-        $view = View::factory('admin/authentication/employee/add'); 
+        $view = View::factory('admin/authentication/employee/add')->bind('validator', $validator)->bind('errors', $errors); 
         $view->role_list=$this->action_roles();
         $view->branch_list=$this->action_branches();
         $view->area_list=$this->action_areas();
@@ -60,24 +60,33 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
         $this->template->content = $view;
         if($_POST)
         {
-            if($_POST['password']==$_POST['val_password'])
-            {
                 $role=ORM::factory('role')->where('name','=',$_POST['role_list'])->find('id');
                 $branch=ORM::factory('branch')->where('name','=',$_POST['branch_list'])->find('id');
                 $area=ORM::factory('area')->where('name','=',$_POST['area_list'])->find('id');
-                $password=hash('md5', $_POST['password']);
-                DB::insert('employees', array('first_name','middle_name','last_name','contact_number','address','employee_password','role_id','branch_id','area_id','visible','update_ts'))
-                    ->values(array($_POST['f_name'],$_POST['m_name'],$_POST['l_name'],$_POST['c_number'],$_POST['address'],$password,$role->id,$branch->id,$area->id,$_POST['calendar'],$_POST['status']))
-                    ->execute();
-                $this->redirect('authentication_employee/list');
-            }
+                $employee=ORM::factory('employee');
+                $validator=$employee->validate_add(arr::extract($_POST,array('emp_id','f_name','m_name','l_name','c_number','address','calendar','new_password','validate_password')));
+                if($validator->check())
+                {
+                    if($_POST['new_password']==$_POST['validate_password'])
+                    {
+                        $password=hash('md5', $_POST['new_password']);
+                        DB::insert('employees', array('first_name','middle_name','last_name','contact_number','address','employee_password','role_id','branch_id','area_id','visible','update_ts'))
+                            ->values(array($_POST['f_name'],$_POST['m_name'],$_POST['l_name'],$_POST['c_number'],$_POST['address'],$password,$role->id,$branch->id,$area->id,$_POST['calendar'],$_POST['status']))
+                            ->execute();
+                        $this->redirect('authentication_employee/list');
+                    }
+                }
+                else
+                {
+                    $errors = $validator->errors('errors');
+                }
         }  
     }
     
     public function action_update(){
         $emp_id=$this->request->param('id');
         Cookie::set('emp_edit_id',$emp_id);
-        $view = View::factory('admin/authentication/employee/edit');
+        $view = View::factory('admin/authentication/employee/edit')->bind('validator', $validator)->bind('errors', $errors);
         $view->roles=$this->action_roles();
         $view->menus=$this->get_menu();
         $view->privileges=ORM::factory('addedempprivileges')->where('employee_id','=',$emp_id)->find_all('privilege_id','menu_id','status');
@@ -93,11 +102,20 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
             if(isset($_POST['employee']))
             {
                 $password=ORM::factory('employee')->where('id','=',$emp_id)->find('employee_password','branch_id','area_id','role_id');
+                $employee=ORM::factory('employee');
                 $role=ORM::factory('role')->where('name','=',$_POST['role'])->find('id');
                 $branch=ORM::factory('branch')->where('name','=',$_POST['branch'])->find('id');
                 $area=ORM::factory('area')->where('name','=',$_POST['area'])->find('id');
-                DB::update('employees')->set(array('first_name' => $_POST['f_name'],'middle_name'=>$_POST['m_name'],'last_name'=>$_POST['l_name'],'contact_number'=>$_POST['c_number'],'address'=>$_POST['address'],'role_id'=>$role->id,'branch_id'=>$branch->id,'area_id'=>$area->id,'visible'=>$_POST['status'],'update_ts'=>$_POST['calendar']))->where('id', '=', $_POST['emp_id'])->execute();
-                $this->redirect('authentication_employee/list');
+                $validator=$password->validate_update(arr::extract($_POST,array('emp_id','f_name','m_name','l_name','c_number','address','calendar')));
+                if($validator->check())
+                {
+                    DB::update('employees')->set(array('first_name' => $_POST['f_name'],'middle_name'=>$_POST['m_name'],'last_name'=>$_POST['l_name'],'contact_number'=>$_POST['c_number'],'address'=>$_POST['address'],'role_id'=>$role->id,'branch_id'=>$branch->id,'area_id'=>$area->id,'visible'=>$_POST['status'],'update_ts'=>$_POST['calendar']))->where('id', '=', $_POST['emp_id'])->execute();
+                    $this->redirect('authentication_employee/list');
+                }
+                else
+                {
+                    $errors = $validator->errors('errors');
+                }
             }
             else if(isset($_POST['privilege']))
             {
@@ -105,68 +123,68 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>0))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>0,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],1,0,  date("MM-dd-YYY")))->execute();
+                        ->values(array($emp_id,$_POST['menu'],1,0,  date("Y-m-d H:i:s")))->execute();
                 }
                 else if(!isset($_POST['view']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>1))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>1,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',1)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],1,1,  date("MM-dd-YYY")))->execute();
+                        ->values(array($emp_id,$_POST['menu'],1,1,  date("Y-m-d H:i:s")))->execute();
                 }
                 if(isset($_POST['save']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>0))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>0,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],2,0,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],2,0,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 else if(!isset($_POST['save']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>1))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>1,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',2)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],2,1,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],2,1,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 if(isset($_POST['edit']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>0))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>0,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],3,0,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],3,0,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 else if(!isset($_POST['edit']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>1))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>1,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',3)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],3,1,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],3,1,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 if(isset($_POST['print']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',4)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>0))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',4)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>0,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',4)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],4,0,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],4,0,  date("Y-m-d H:i:s")))
                         ->execute();
                     
                 }
@@ -177,27 +195,27 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
                         DB::update('employee_menu_privileges')->set(array('status'=>1))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',4)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],4,1,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],4,1,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 if(isset($_POST['post']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>0))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>0,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],5,0,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],5,0,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 else if(!isset($_POST['post']))
                 {
                     $menu_privilege=DB::select('status')->from('employee_menu_privileges')->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
                     if($menu_privilege->count()==1)
-                        DB::update('employee_menu_privileges')->set(array('status'=>1))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
+                        DB::update('employee_menu_privileges')->set(array('status'=>1,'date_modified'=>date("Y-m-d H:i:s")))->where('employee_id','=',$emp_id)->where('menu_id','=',$_POST['menu'])->where('privilege_id','=',5)->execute();
                     else if($menu_privilege->count()==0)
                         DB::insert('employee_menu_privileges', array('employee_id','menu_id','privilege_id','status','date_modified'))
-                        ->values(array($emp_id,$_POST['menu'],5,1,  date("MM-dd-YYY")))
+                        ->values(array($emp_id,$_POST['menu'],5,1,  date("Y-m-d H:i:s")))
                         ->execute();
                 }
                 $this->redirect('authentication_employee/update/'.Cookie::get('emp_edit_id'));

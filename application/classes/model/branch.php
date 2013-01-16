@@ -18,4 +18,17 @@ class Model_Branch extends ORM {
             ),
         );
     }
+    
+    public function validate_login($arr) {
+        return Validation::factory($arr)
+            ->rule('branch_code', 'not_empty')
+            ->rule('password', 'not_empty');
+    }
+    
+    public function validate_changepassword($arr) {
+        return Validation::factory($arr)
+            ->rule('old_password', 'not_empty')
+            ->rule('new_password', 'not_empty')
+            ->rule('validate_password', 'not_empty');
+    }
 }

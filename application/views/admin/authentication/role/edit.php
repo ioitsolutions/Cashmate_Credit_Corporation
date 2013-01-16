@@ -21,6 +21,9 @@
                                         </td>
 				</tr>
                                 <tr>
+                                    <td></td><td><label for="role" class="error"/><?php echo Arr::get($errors, 'role'); ?></td>
+                                </tr>
+                                <tr>
 					<td>Status:</td>
 					<td class="edit_align" id="status">
                                             <select class="fields" name="visible">
@@ -32,14 +35,23 @@
                                 <tr>
 					<td>Date Modified:</td>
 					<td class="edit_align"><input type="text" class="fields datepicker" id="datepicker" name="calendar" value="<?php echo $role->update_ts; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="calendar" class="error"/><?php echo Arr::get($errors, 'calendar'); ?></td>
+                                </tr>
                                 <tr>
                                     <td>Role Password:</td>
-                                    <td class="edit_align"><input type="password" class="fields" name="password"/></td>
+                                    <td class="edit_align"><input type="password" class="fields" name="new_password"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="new_password" class="error"/><?php echo Arr::get($errors, 'new_password'); ?></td>
                                 </tr>
                                 <tr>
                                     <td>Re-type Role Password:</td>
-                                    <td class="edit_align"><input type="password" class="fields" name="confirm_password"/></td>
+                                    <td class="edit_align"><input type="password" class="fields" name="validate_password"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="validate_password" class="error"/><?php echo Arr::get($errors, 'validate_password'); ?></td>
                                 </tr>
 			</table><br/>
                         <input type="submit" value="Edit"/>

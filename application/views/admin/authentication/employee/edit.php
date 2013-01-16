@@ -11,27 +11,45 @@
 				<tr>
 					<td>Employee ID:</td>
 					<td class="edit_align"><input type="text" name="emp_id" disabled class="fields" value="<?php echo $employee->id; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="emp_id" class="error"/><?php echo Arr::get($errors, 'emp_id'); ?></td>
+                                </tr>
 				<tr>
 					<td>First Name:</td>
 					<td class="edit_align"><input type="text" name="f_name" class="fields" value="<?php echo $employee->first_name; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="f_name" class="error"/><?php echo Arr::get($errors, 'f_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Middle Name:</td>
 					<td class="edit_align"><input type="text" name="m_name" class="fields" value="<?php echo $employee->middle_name; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="m_name" class="error"/><?php echo Arr::get($errors, 'm_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Last Name:</td>
 					<td class="edit_align"><input type="text" name="l_name" class="fields" value="<?php echo $employee->last_name; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="l_name" class="error"/><?php echo Arr::get($errors, 'l_name'); ?></td>
+                                </tr>
 				<tr>
 					<td>Address:</td>
 					<td class="edit_align"><input type="text" name="address" class="fields" value="<?php echo $employee->address; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="address" class="error"/><?php echo Arr::get($errors, 'address'); ?></td>
+                                </tr>
 				<tr>
 					<td>Contact Number:</td>
 					<td class="edit_align"><input type="text" name="c_number" class="fields" value="<?php echo $employee->contact_number; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="c_number" class="error"/><?php echo Arr::get($errors, 'c_number'); ?></td>
+                                </tr>
 				<tr>
 					<td>Role:</td>
 					<td class="edit_align">
@@ -81,7 +99,10 @@
 				<tr>
 					<td>Date Created:</td>
 					<td class="edit_align"><input type="text" class="fields datepicker" name="calendar" value="<?php echo $employee->update_ts; ?>"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="calendar" class="error"/><?php echo Arr::get($errors, 'calendar'); ?></td>
+                                </tr>
 				<tr>
 					<td>Status:</td>
 					<td class="edit_align">

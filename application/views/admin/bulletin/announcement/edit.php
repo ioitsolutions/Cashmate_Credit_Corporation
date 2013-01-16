@@ -21,9 +21,7 @@
                     </tr>
                     <tr>
                         <td>Title:</td>
-                        <td class="edit_align">
-                            <input type="text" name="title" value="<?= $announcement->title ?>"/>
-                        </td>
+                        <td class="edit_align"><input type="text" name="title" value="<?= $announcement->title ?>"/></td>
                     </tr>
                     <tr>
                         <td></td>

@@ -12,11 +12,24 @@
 				<tr>
 					<td>Menu:</td>
 					<td class="edit_align"><input type="text" class="fields" name="menu"/></td>
-				</tr>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="menu" class="error"/><?php echo Arr::get($errors, 'menu'); ?></td>
+                                </tr>
 				<tr>
 					<td>Description:</td>
-					<td class="edit_align"><input type="text" class="fields" name="Description"/></td>
-				</tr>
+					<td class="edit_align"><input type="text" class="fields" name="description"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="description" class="error"/><?php echo Arr::get($errors, 'description'); ?></td>
+                                </tr>
+                                <tr>
+					<td>Date Created:</td>
+					<td class="edit_align"><input type="text" id="datepicker" class="fields datepicker" name="calendar"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td><label for="calendar" class="error"/><?php echo Arr::get($errors, 'calendar'); ?></td>
+                                </tr>
                                 <tr>
 					<td class="edit_align">
 						<input type="submit" value="Add"/>

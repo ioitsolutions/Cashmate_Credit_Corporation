@@ -28,18 +28,27 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
     }
     
     public function action_create(){
-        $view = View::factory('admin/authentication/role/add');
+        $view = View::factory('admin/authentication/role/add')->bind('validator', $validator)->bind('errors', $errors);
         $this->template->title_content = "Role - Administration Add Role";
         $view->set('title_form','Add Role Record');
         $view->set('btn_title','Add');
         $this->template->content = $view;
         if($_POST)
         {
-            if($_POST['password']==$_POST['confirm_password'])
+            if($_POST['new_password']==$_POST['validate_password'])
             {
-                $password=hash('md5', $_POST['password']);
-                 DB::insert('roles', array('name','role_password','visible','update_ts','update_user'))
-                        ->values(array($_POST['role'],$password,0,$_POST['calendar'],''))->execute();
+                $role=ORM::factory('role');
+                $validator=$role->validate_add(arr::extract($_POST,array('role','new_password','validate_password','calendar')));
+                if($validator->check())
+                {
+                    $password=hash('md5', $_POST['new_password']);
+                     DB::insert('roles', array('name','role_password','visible','update_ts','update_user'))
+                            ->values(array($_POST['role'],$password,0,$_POST['calendar'],''))->execute();
+                }
+                else
+                {
+                    $errors = $validator->errors('errors');
+                }
             }
         }
     }
@@ -47,7 +56,7 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
     public function action_update()
     {
         $role_id=$this->request->param('id');
-        $view = View::factory('admin/authentication/role/edit');
+        $view = View::factory('admin/authentication/role/edit')->bind('validator', $validator)->bind('errors', $errors);
         $view->role=ORM::factory('role')->where('id','=',$role_id)->find('id','name','update_ts');
         $this->template->title_content = "Role - Administration Edit Role";
         $view->set('title_form','Edit Role Record');
@@ -55,11 +64,20 @@ class Controller_Authentication_Role extends Controller_Template_Admin{
         $this->template->content = $view;
         if($_POST)
         {
-            if($_POST['password']==$_POST['confirm_password'])
+            $role=ORM::factory('role');
+            $validator=$role->validate_add(arr::extract($_POST,array('role','new_password','validate_password','calendar')));
+            if($validator->check())
             {
-                $password=hash('md5', $_POST['password']);
-                DB::update('roles')->set(array('name'=>$_POST['role'],'update_ts'=>$_POST['calendar'],'role_password'=>$password,'visible'=>$_POST['visible']))->where('id','=',$role_id)->execute();
-                $this->redirect('authentication_role/list');
+                if($_POST['new_password']==$_POST['validate_password'])
+                {
+                    $password=hash('md5', $_POST['new_password']);
+                    DB::update('roles')->set(array('name'=>$_POST['role'],'update_ts'=>$_POST['calendar'],'role_password'=>$password,'visible'=>$_POST['visible']))->where('id','=',$role_id)->execute();
+                    $this->redirect('authentication_role/list');
+                }   
+            }
+            else
+            {
+                $errors = $validator->errors('errors');
             }
         }
     }

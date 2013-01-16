@@ -16,4 +16,20 @@ class Model_Menu extends ORM {
           ),
         );
     }
+    
+    public function validate_add($arr)
+    {
+        return Validation::factory($arr)
+            ->rule('menu', 'not_empty')
+            ->rule('description', 'not_empty')
+            ->rule('calendar', 'not_empty');
+    }
+    
+    public function validate_update($arr)
+    {
+        return Validation::factory($arr)
+            ->rule('menu', 'not_empty')
+            ->rule('description', 'not_empty')
+            ->rule('calendar', 'not_empty');
+    }
 }

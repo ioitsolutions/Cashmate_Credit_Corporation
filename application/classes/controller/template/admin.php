@@ -43,9 +43,7 @@ class Controller_Template_Admin extends Controller_Template{
             'Branch' => 'branch_branches',
             'Borrowers' => 'borrower_borrower',
             'Loan' => 'loan_type',
-            
-            /* Employee */
-            /*'Application' => 'loan_application',*/
+            'Application' => 'loan_application',
             'Loan' => 'loan_application',
             'Performance And Incentives' => 'incentives_custodian',
             'Inquiry' => 'loan_inquiry',
