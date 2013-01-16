@@ -47,7 +47,7 @@
                                 </tr>
 			</table><br/>
                         <input type="submit" value="Add"/>
-                        <input type="button" value="Cancel"/>
+                        <input type="button" value="Cancel" onClick="window.location.href='http://localhost/Cashmate_Credit_Corporation/authentication_role/list'"/>
 		</div> 
     </fieldset>
 </form>

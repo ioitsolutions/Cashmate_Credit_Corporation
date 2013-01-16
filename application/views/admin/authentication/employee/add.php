@@ -114,7 +114,7 @@
 					<td></td>
 					<td class="edit_align">
 						<input type="submit" value="Add"/>
-						<input type="button" value="Cancel"/>
+						<input type="button" value="Cancel" onClick="window.location.href='http://localhost/Cashmate_Credit_Corporation/authentication_employee/list'"/>
 					</td>
 				</tr>
 			</table>
