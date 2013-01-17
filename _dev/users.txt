@@ -1,0 +1,72 @@
+----------------------------------
+Employee
+----------------------------------
+Employee ID		Password:
+00000000001		arnold
+00000000010		president
+
+-----------------------------------
+
+Role
+-----------------------------------
+Role			Password:
+Branch Secretary	secretary
+Branch Manager		manager
+Administrator		administrator
+Branch Custodian	custodian
+Operations Head		operation
+Accounting Head		accounting
+Releasing Officer	releasing
+Accounting Clerk	clerk
+Head Custodian		head
+President		president
+
+-----------------------------------
+Branch
+-----------------------------------
+Branch Code:		Password:
+URD			secretary
+DAG			manager
+SNC			administrator
+TLC			custodian
+SFN			operation
+ALM			accounting
+CDN			releasing
+AGL			clerk
+
+
+
+Test Users
+----------------
+Test User 1
+----------------
+Employee Log In
+----------------
+Employee ID: 1
+Password: arnold
+
+Role Log In
+-----------------
+Role Password: manager
+
+Branch Log In
+-----------------
+Branch Code: URD
+Password: secretary
+
+---------------
+Test User 2
+---------------
+Employee Log In
+----------------
+Employee ID: 10
+Password: president
+
+Role Log In
+-----------------
+Role Password: manager
+
+Branch Log In
+-----------------
+Branch Code: DAG
+Password: manager
