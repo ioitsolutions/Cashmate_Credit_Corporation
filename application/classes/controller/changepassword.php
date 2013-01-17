@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
-class Controller_Changepassword extends Controller_Login
+class Controller_Changepassword extends Controller_Template_Admin
 {
     public function action_employee()
     {

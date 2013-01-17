@@ -70,9 +70,13 @@ class Controller_Authentication_Employee extends Controller_Template_Admin{
                     if($_POST['new_password']==$_POST['validate_password'])
                     {
                         $password=hash('md5', $_POST['new_password']);
-                        DB::insert('employees', array('first_name','middle_name','last_name','contact_number','address','employee_password','role_id','branch_id','area_id','visible','update_ts'))
+                       $sql= DB::insert('employees', array('first_name','middle_name','last_name','contact_number','address','employee_password','role_id','branch_id','area_id','visible','update_ts'))
                             ->values(array($_POST['f_name'],$_POST['m_name'],$_POST['l_name'],$_POST['c_number'],$_POST['address'],$password,$role->id,$branch->id,$area->id,$_POST['calendar'],$_POST['status']))
                             ->execute();
+                       
+                        DB::insert('employee_roles',array('employee_id','role_id'))
+                                ->values(array($sql[0], $role->id))
+                                ->execute();
                         $this->redirect('authentication_employee/list');
                     }
                 }

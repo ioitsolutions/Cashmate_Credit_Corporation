@@ -6,10 +6,22 @@ class Controller_Template_Admin extends Controller_Template{
     
     public function before(){
         parent::before();
+        
+        $this->verify_logged_in();
+        
         $this->template->meta = $this->get_meta();
         $this->template->styles = $this->get_styles();
         $this->template->scripts = $this->get_scripts();
         $this->template->links = $this->get_links();
+    }
+    
+    protected function verify_logged_in() {
+        
+        if(!Session::instance()->get('logged_in') || !Session::instance()->get('logged_in_role') || !Session::instance()->get('logged_in_branch'))
+            $this->redirect('');
+
+       /* if($this->session->get('logged_in__role') != $this->uri->segment(1))
+            $this->redirect('');*/
     }
     
     protected function get_meta(){
