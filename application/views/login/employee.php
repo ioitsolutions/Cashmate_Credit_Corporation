@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct access allowed.'); ?>
 <form id="form" method="post" accept-charset="utf-8">
     <?php echo Form::open('login/employee/'); ?>
-    <div id="error_container"><?php echo Cookie::get('error');?></div>
+    <div id="error_container"><?php echo $notice;?></div>
     <table align="center">
         
         <tr>
