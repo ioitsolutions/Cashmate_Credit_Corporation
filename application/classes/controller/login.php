@@ -23,6 +23,7 @@ class Controller_Login extends Controller_Template_Login{
                     Session::instance()->set('logged_in','logged_in_user');
                     $area=ORM::factory('area')->where('id','=',$employees->area_id)->find('code');
                     Cookie::set('id',$employees->id);
+                    Cookie::set('area_id',$area->id);
                     Cookie::set('area_code',$area->code);
                     Cookie::set('branch_id',$employees->branch_id);
                     Cookie::set('first_name',$employees->first_name);
